@@ -2,18 +2,15 @@ package main
 
 import flags "github.com/jessevdk/go-flags"
 
-type PositionalArgs struct {
-	Command string
-}
-
 type Args struct {
-	Socket     string         `long:"socket"`
-	Positional PositionalArgs `positional-args:"true"`
+	Socket string `long:"socket"`
+	Action string `long:"action"`
 }
 
 func parseArgs() (Args, error) {
 	var args Args
-	_, err := flags.Parse(&args)
+	parser := flags.NewParser(&args, flags.IgnoreUnknown)
+	_, err := parser.Parse()
 	if err != nil {
 		return Args{}, err
 	}

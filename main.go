@@ -35,7 +35,7 @@ func main() {
 		failWith(err)
 	}
 
-	msg := message.Message{Command: args.Positional.Command, Data: string(data)}
+	msg := message.Message{Command: args.Action, Data: string(data)}
 	encoder := json.NewEncoder(conn)
 	if err := encoder.Encode(&msg); err != nil {
 		failWith(err)

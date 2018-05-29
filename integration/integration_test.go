@@ -79,7 +79,7 @@ var _ = Describe("Integration", func() {
 
 	Describe("Up", func() {
 		BeforeEach(func() {
-			shimCmd.Args = append(shimCmd.Args, "up")
+			shimCmd.Args = append(shimCmd.Args, "--action", "up")
 		})
 
 		It("exits successfully", func() {
@@ -132,12 +132,23 @@ var _ = Describe("Integration", func() {
 			It("exits non zero", func() {
 				Expect(shimSession.Wait()).NotTo(gexec.Exit(0))
 			})
+
+		})
+
+		Context("when a handle is supplied", func() {
+			BeforeEach(func() {
+				shimCmd.Args = append(shimCmd.Args, "--handle", "12345")
+			})
+
+			It("exits successfully", func() {
+				Expect(shimSession.Wait()).To(gexec.Exit(0))
+			})
 		})
 	})
 
 	Describe("Down", func() {
 		BeforeEach(func() {
-			shimCmd.Args = append(shimCmd.Args, "down")
+			shimCmd.Args = append(shimCmd.Args, "--action", "down")
 		})
 
 		It("exits successfully", func() {
