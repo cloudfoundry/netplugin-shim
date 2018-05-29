@@ -23,12 +23,14 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	listener, err := net.Listen("unix", args.Socket)
+	if err != nil {
+		panic(err)
+	}
+
+	defer listener.Close()
 
 	for {
-		listener, err := net.Listen("unix", args.Socket)
-		if err != nil {
-			panic(err)
-		}
 		conn, err := listener.Accept()
 		if err != nil {
 			panic(err)
@@ -46,12 +48,13 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		file, err := os.Create(args.MessageFile)
+
+		jsonMessage, err := json.Marshal(msg)
 		if err != nil {
 			panic(err)
 		}
-		defer file.Close()
-		if err = json.NewEncoder(file).Encode(&msg); err != nil {
+
+		if err = ioutil.WriteFile(args.MessageFile, jsonMessage, os.ModePerm); err != nil {
 			panic(err)
 		}
 
@@ -66,7 +69,6 @@ func main() {
 		}
 
 		conn.Close()
-		listener.Close()
 	}
 }
 
