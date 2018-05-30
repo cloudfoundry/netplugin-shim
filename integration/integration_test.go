@@ -65,7 +65,7 @@ var _ = Describe("Integration", func() {
 			"--message-file", messagePath,
 		)
 		daemonSession = gexecStart(daemonCmd)
-		Eventually(socketPath).Should(BeAnExistingFile())
+		waitForFileToExist(socketPath)
 
 		shimSession = gexecStart(shimCmd)
 	})
@@ -87,7 +87,7 @@ var _ = Describe("Integration", func() {
 		})
 
 		It("sends the net ns fd of the provided pid to the socket", func() {
-			Eventually(fdPath).Should(BeAnExistingFile())
+			waitForFileToExist(fdPath)
 			fd := atoi(readFileAsString(fdPath))
 			name, err := os.Readlink(fmt.Sprintf("/proc/%d/fd/%d", daemonSession.Command.Process.Pid, fd))
 			Expect(err).NotTo(HaveOccurred())
@@ -95,19 +95,19 @@ var _ = Describe("Integration", func() {
 		})
 
 		It("sends the command to the provided socket", func() {
-			Eventually(messagePath, time.Second*2).Should(BeAnExistingFile())
+			waitForFileToExist(messagePath)
 			message := decodeMessage(strings.NewReader(readFileAsString(messagePath)))
 			Expect(message.Command).To(Equal("up"))
 		})
 
 		It("sends the handle to the provided socket", func() {
-			Eventually(messagePath, time.Second*2).Should(BeAnExistingFile())
+			waitForFileToExist(messagePath)
 			message := decodeMessage(strings.NewReader(readFileAsString(messagePath)))
 			Expect(message.Handle).To(Equal("potato"))
 		})
 
 		It("includes stdin contents in the message sent to the socket", func() {
-			Eventually(messagePath, time.Second*2).Should(BeAnExistingFile())
+			waitForFileToExist(messagePath)
 			message := decodeMessage(strings.NewReader(readFileAsString(messagePath)))
 			Expect(message.Data).To(Equal(fmt.Sprintf(`{"Pid":%d,"Properties":null}`, initSession.Command.Process.Pid)))
 		})
@@ -152,7 +152,7 @@ var _ = Describe("Integration", func() {
 		})
 
 		It("sends the command to the socket", func() {
-			Eventually(func() string { return messagePath }).Should(BeAnExistingFile())
+			waitForFileToExist(messagePath)
 			message := decodeMessage(strings.NewReader(readFileAsString(messagePath)))
 			Expect(message.Command).To(Equal("down"))
 		})
@@ -201,4 +201,16 @@ func decodeMessage(r io.Reader) message.Message {
 	decoder := json.NewDecoder(r)
 	Expect(decoder.Decode(&content)).To(Succeed())
 	return content
+}
+
+func waitForFileToExist(filepath string) {
+	for {
+		if _, err := os.Stat(filepath); os.IsNotExist(err) {
+			time.Sleep(time.Second)
+		} else {
+			break
+		}
+	}
+
+	Expect(filepath).To(BeAnExistingFile())
 }
