@@ -79,7 +79,7 @@ var _ = Describe("Integration", func() {
 
 	Describe("Up", func() {
 		BeforeEach(func() {
-			shimCmd.Args = append(shimCmd.Args, "--action", "up")
+			shimCmd.Args = append(shimCmd.Args, "--action", "up", "--handle", "potato")
 		})
 
 		It("exits successfully", func() {
@@ -98,6 +98,12 @@ var _ = Describe("Integration", func() {
 			Eventually(messagePath, time.Second*2).Should(BeAnExistingFile())
 			message := decodeMessage(strings.NewReader(readFileAsString(messagePath)))
 			Expect(message.Command).To(Equal("up"))
+		})
+
+		It("sends the handle to the provided socket", func() {
+			Eventually(messagePath, time.Second*2).Should(BeAnExistingFile())
+			message := decodeMessage(strings.NewReader(readFileAsString(messagePath)))
+			Expect(message.Handle).To(Equal("potato"))
 		})
 
 		It("includes stdin contents in the message sent to the socket", func() {
@@ -134,21 +140,11 @@ var _ = Describe("Integration", func() {
 			})
 
 		})
-
-		Context("when a handle is supplied", func() {
-			BeforeEach(func() {
-				shimCmd.Args = append(shimCmd.Args, "--handle", "12345")
-			})
-
-			It("exits successfully", func() {
-				Expect(shimSession.Wait()).To(gexec.Exit(0))
-			})
-		})
 	})
 
 	Describe("Down", func() {
 		BeforeEach(func() {
-			shimCmd.Args = append(shimCmd.Args, "--action", "down")
+			shimCmd.Args = append(shimCmd.Args, "--action", "down", "--handle", "potato")
 		})
 
 		It("exits successfully", func() {
