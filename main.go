@@ -16,39 +16,33 @@ import (
 
 func main() {
 	args, err := parseArgs()
-	if err != nil {
-		failWith(err)
-	}
+	exitOn(err)
 
 	conn, err := net.DialUnix("unix", nil, &net.UnixAddr{Name: args.Socket, Net: "unix"})
-	if err != nil {
-		failWith(err)
-	}
+	exitOn(err)
 	defer conn.Close()
 
 	data, pid, err := readDataAndPID(os.Stdin)
-	if err != nil {
-		failWith(err)
-	}
+	exitOn(err)
 
-	if err := writeNetNSFD(conn, pid); err != nil {
-		failWith(err)
-	}
+	err = writeNetNSFD(conn, pid)
+	exitOn(err)
 
 	msg := message.Message{Command: args.Action, Data: string(data)}
 	encoder := json.NewEncoder(conn)
-	if err := encoder.Encode(&msg); err != nil {
-		failWith(err)
-	}
 
-	if err := writeReply(conn); err != nil {
-		failWith(err)
-	}
+	err = encoder.Encode(&msg)
+	exitOn(err)
+
+	err = writeReply(conn)
+	exitOn(err)
 }
 
-func failWith(err error) {
-	fmt.Fprint(os.Stderr, err.Error())
-	os.Exit(1)
+func exitOn(err error) {
+	if err != nil {
+		fmt.Fprint(os.Stderr, err.Error())
+		os.Exit(1)
+	}
 }
 
 func readDataAndPID(r io.Reader) ([]byte, int, error) {
