@@ -65,7 +65,7 @@ var _ = Describe("Integration", func() {
 			"--message-file", messagePath,
 		)
 		daemonSession = gexecStart(daemonCmd)
-		Eventually(parrot(socketPath)).Should(BeAnExistingFile())
+		Eventually(socketPath).Should(BeAnExistingFile())
 
 		shimSession = gexecStart(shimCmd)
 	})
@@ -87,7 +87,7 @@ var _ = Describe("Integration", func() {
 		})
 
 		It("sends the net ns fd of the provided pid to the socket", func() {
-			Eventually(parrot(fdPath)).Should(BeAnExistingFile())
+			Eventually(fdPath).Should(BeAnExistingFile())
 			fd := atoi(readFileAsString(fdPath))
 			name, err := os.Readlink(fmt.Sprintf("/proc/%d/fd/%d", daemonSession.Command.Process.Pid, fd))
 			Expect(err).NotTo(HaveOccurred())
@@ -95,13 +95,13 @@ var _ = Describe("Integration", func() {
 		})
 
 		It("sends the command to the provided socket", func() {
-			Eventually(parrot(messagePath), time.Second*2).Should(BeAnExistingFile())
+			Eventually(messagePath, time.Second*2).Should(BeAnExistingFile())
 			message := decodeMessage(strings.NewReader(readFileAsString(messagePath)))
 			Expect(message.Command).To(Equal("up"))
 		})
 
 		It("includes stdin contents in the message sent to the socket", func() {
-			Eventually(parrot(messagePath), time.Second*2).Should(BeAnExistingFile())
+			Eventually(messagePath, time.Second*2).Should(BeAnExistingFile())
 			message := decodeMessage(strings.NewReader(readFileAsString(messagePath)))
 			Expect(message.Data).To(Equal(fmt.Sprintf(`{"Pid":%d,"Properties":null}`, initSession.Command.Process.Pid)))
 		})
@@ -205,10 +205,4 @@ func decodeMessage(r io.Reader) message.Message {
 	decoder := json.NewDecoder(r)
 	Expect(decoder.Decode(&content)).To(Succeed())
 	return content
-}
-
-func parrot(str string) func() string {
-	return func() string {
-		return str
-	}
 }
