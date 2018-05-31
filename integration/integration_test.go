@@ -48,12 +48,6 @@ var _ = Describe("Integration", func() {
 		daemonReply = []byte(`{"Here":"Be Dragons"}`)
 
 		initSession = gexecStart(initCommand())
-
-		upInputs := &netplugin.UpInputs{
-			Pid: initSession.Command.Process.Pid,
-		}
-
-		shimCmd.Stdin = strings.NewReader(encode(upInputs))
 	})
 
 	JustBeforeEach(func() {
@@ -80,6 +74,11 @@ var _ = Describe("Integration", func() {
 	Describe("Up", func() {
 		BeforeEach(func() {
 			shimCmd.Args = append(shimCmd.Args, "--action", "up", "--handle", "potato")
+
+			upInputs := &netplugin.UpInputs{
+				Pid: initSession.Command.Process.Pid,
+			}
+			shimCmd.Stdin = strings.NewReader(encode(upInputs))
 		})
 
 		It("exits successfully", func() {
@@ -145,6 +144,7 @@ var _ = Describe("Integration", func() {
 	Describe("Down", func() {
 		BeforeEach(func() {
 			shimCmd.Args = append(shimCmd.Args, "--action", "down", "--handle", "potato")
+			shimCmd.Stdin = strings.NewReader(encode(nil))
 		})
 
 		It("exits successfully", func() {
@@ -155,6 +155,15 @@ var _ = Describe("Integration", func() {
 			waitForFileToExist(messagePath)
 			message := decodeMessage(strings.NewReader(readFileAsString(messagePath)))
 			Expect(message.Command).To(Equal("down"))
+		})
+
+		It("sends an fd to /dev/null", func() {
+			waitForFileToExist(fdPath)
+			fd := atoi(readFileAsString(fdPath))
+
+			name, err := os.Readlink(fmt.Sprintf("/proc/%d/fd/%d", daemonSession.Command.Process.Pid, fd))
+			Expect(err).NotTo(HaveOccurred())
+			Expect(name).To(Equal("/dev/null"))
 		})
 	})
 })

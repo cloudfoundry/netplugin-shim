@@ -8,6 +8,8 @@ import (
 	"io/ioutil"
 	"net"
 	"os"
+	"path/filepath"
+	"strconv"
 
 	"code.cloudfoundry.org/guardian/netplugin"
 	"code.cloudfoundry.org/netplugin-shim/message"
@@ -60,7 +62,15 @@ func readDataAndPID(r io.Reader) ([]byte, int, error) {
 }
 
 func writeNetNSFD(socket *net.UnixConn, pid int) error {
-	file, err := os.Open(fmt.Sprintf("/proc/%d/ns/net", pid))
+	// Always send an FD over the socket, but it will only be
+	// an FD to the net ns of process if the provided pid != 0.
+	// This allows the same execution path for both "up" and "down" commands.
+	path := os.DevNull
+	if pid != 0 {
+		path = filepath.Join("/proc", strconv.Itoa(pid), "ns", "net")
+	}
+
+	file, err := os.Open(path)
 	if err != nil {
 		return err
 	}
