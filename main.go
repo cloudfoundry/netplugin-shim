@@ -65,17 +65,18 @@ func writeNetNSFD(socket *net.UnixConn, pid int) error {
 	// Always send an FD over the socket, but it will only be
 	// an FD to the net ns of process if the provided pid != 0.
 	// This allows the same execution path for both "up" and "down" commands.
-	path := os.DevNull
+	netNSFilepath := os.DevNull
 	if pid != 0 {
-		path = filepath.Join("/proc", strconv.Itoa(pid), "ns", "net")
+		netNSFilepath = filepath.Join("/proc", strconv.Itoa(pid), "ns", "net")
 	}
 
-	file, err := os.Open(path)
+	netNSFile, err := os.Open(netNSFilepath)
 	if err != nil {
 		return err
 	}
+	defer netNSFile.Close()
 
-	socketControlMessage := unix.UnixRights(int(file.Fd()))
+	socketControlMessage := unix.UnixRights(int(netNSFile.Fd()))
 	_, _, err = socket.WriteMsgUnix(nil, socketControlMessage, nil)
 	return err
 }
