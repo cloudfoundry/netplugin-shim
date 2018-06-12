@@ -30,7 +30,7 @@ func main() {
 	err = writeNetNSFD(conn, pid)
 	exitOn(err)
 
-	msg := message.Message{Command: args.Action, Handle: args.Handle, Data: string(data)}
+	msg := message.Message{Command: []byte(args.Action), Handle: []byte(args.Handle), Data: data}
 	encoder := json.NewEncoder(conn)
 
 	err = encoder.Encode(&msg)

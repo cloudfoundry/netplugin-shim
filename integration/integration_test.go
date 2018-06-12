@@ -96,19 +96,19 @@ var _ = Describe("Integration", func() {
 		It("sends the command to the provided socket", func() {
 			waitForFileToExist(messagePath)
 			message := decodeMessage(strings.NewReader(readFileAsString(messagePath)))
-			Expect(message.Command).To(Equal("up"))
+			Expect(string(message.Command)).To(Equal("up"))
 		})
 
 		It("sends the handle to the provided socket", func() {
 			waitForFileToExist(messagePath)
 			message := decodeMessage(strings.NewReader(readFileAsString(messagePath)))
-			Expect(message.Handle).To(Equal("potato"))
+			Expect(string(message.Handle)).To(Equal("potato"))
 		})
 
 		It("includes stdin contents in the message sent to the socket", func() {
 			waitForFileToExist(messagePath)
 			message := decodeMessage(strings.NewReader(readFileAsString(messagePath)))
-			Expect(message.Data).To(Equal(fmt.Sprintf(`{"Pid":%d,"Properties":null}`, initSession.Command.Process.Pid)))
+			Expect(string(message.Data)).To(Equal(fmt.Sprintf(`{"Pid":%d,"Properties":null}`, initSession.Command.Process.Pid)))
 		})
 
 		It("writes JSON to stdout", func() {
@@ -154,7 +154,7 @@ var _ = Describe("Integration", func() {
 		It("sends the command to the socket", func() {
 			waitForFileToExist(messagePath)
 			message := decodeMessage(strings.NewReader(readFileAsString(messagePath)))
-			Expect(message.Command).To(Equal("down"))
+			Expect(string(message.Command)).To(Equal("down"))
 		})
 
 		It("sends an fd to /dev/null", func() {
