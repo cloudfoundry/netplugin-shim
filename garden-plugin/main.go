@@ -12,7 +12,7 @@ import (
 	"strconv"
 
 	"code.cloudfoundry.org/guardian/netplugin"
-	"code.cloudfoundry.org/netplugin-shim/message"
+	"code.cloudfoundry.org/netplugin-shim/garden-plugin/message"
 	"golang.org/x/sys/unix"
 )
 
@@ -24,10 +24,14 @@ func main() {
 	exitOn(err)
 	defer conn.Close()
 
-	data, pid, err := readDataAndPID(os.Stdin)
+	inputs, err := readData(os.Stdin)
 	exitOn(err)
 
-	err = writeNetNSFD(conn, pid)
+	err = writeNetNSFD(conn, inputs.Pid)
+	exitOn(err)
+
+	inputs.Pid = 0
+	data, err := json.Marshal(inputs)
 	exitOn(err)
 
 	msg := message.Message{Command: []byte(args.Action), Handle: []byte(args.Handle), Data: data}
@@ -47,18 +51,16 @@ func exitOn(err error) {
 	}
 }
 
-func readDataAndPID(r io.Reader) ([]byte, int, error) {
+func readData(r io.Reader) (netplugin.UpInputs, error) {
+	var upInputs netplugin.UpInputs
+
 	data, err := ioutil.ReadAll(r)
 	if err != nil {
-		return nil, 0, err
+		return upInputs, err
 	}
 
-	var upInputs netplugin.UpInputs
-	if err = json.NewDecoder(bytes.NewBuffer(data)).Decode(&upInputs); err != nil {
-		return nil, 0, err
-	}
-
-	return data, upInputs.Pid, nil
+	err = json.NewDecoder(bytes.NewBuffer(data)).Decode(&upInputs)
+	return upInputs, nil
 }
 
 func writeNetNSFD(socket *net.UnixConn, pid int) error {

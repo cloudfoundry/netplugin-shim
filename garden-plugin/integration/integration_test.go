@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"code.cloudfoundry.org/guardian/netplugin"
-	"code.cloudfoundry.org/netplugin-shim/message"
+	"code.cloudfoundry.org/netplugin-shim/garden-plugin/message"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/onsi/gomega/gexec"
@@ -72,10 +72,12 @@ var _ = Describe("Integration", func() {
 	})
 
 	Describe("Up", func() {
+		var upInputs netplugin.UpInputs
+
 		BeforeEach(func() {
 			shimCmd.Args = append(shimCmd.Args, "--action", "up", "--handle", "potato")
 
-			upInputs := &netplugin.UpInputs{
+			upInputs = netplugin.UpInputs{
 				Pid: initSession.Command.Process.Pid,
 			}
 			shimCmd.Stdin = strings.NewReader(encode(upInputs))
@@ -105,10 +107,10 @@ var _ = Describe("Integration", func() {
 			Expect(string(message.Handle)).To(Equal("potato"))
 		})
 
-		It("includes stdin contents in the message sent to the socket", func() {
+		It("includes stdin contents with the pid set to 0 in the message sent to the socket", func() {
 			waitForFileToExist(messagePath)
 			message := decodeMessage(strings.NewReader(readFileAsString(messagePath)))
-			Expect(string(message.Data)).To(Equal(fmt.Sprintf(`{"Pid":%d,"Properties":null}`, initSession.Command.Process.Pid)))
+			Expect(string(message.Data)).To(MatchJSON(`{"Pid":0,"Properties":null}`))
 		})
 
 		It("writes JSON to stdout", func() {
@@ -120,7 +122,7 @@ var _ = Describe("Integration", func() {
 		It("writes the network daemon's response to stdout", func() {
 			Expect(shimSession.Wait()).To(gexec.Exit())
 			stdout := string(shimSession.Out.Contents())
-			Expect(strings.TrimSpace(stdout)).To(Equal(`{"Here":"Be Dragons"}`))
+			Expect(strings.TrimSpace(stdout)).To(MatchJSON(`{"Here":"Be Dragons"}`))
 		})
 
 		Context("when the network daemon reports an error", func() {

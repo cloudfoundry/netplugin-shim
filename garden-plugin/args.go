@@ -3,9 +3,9 @@ package main
 import flags "github.com/jessevdk/go-flags"
 
 type Args struct {
-	Socket string `long:"socket"`
-	Handle string `long:"handle"`
-	Action string `long:"action"`
+	Socket string `long:"socket" required:"true"`
+	Handle string `long:"handle" required:"true"`
+	Action string `long:"action" required:"true"`
 }
 
 func parseArgs() (Args, error) {

@@ -9,7 +9,7 @@ import (
 	"net"
 	"os"
 
-	"code.cloudfoundry.org/netplugin-shim/message"
+	"code.cloudfoundry.org/netplugin-shim/garden-plugin/message"
 	"golang.org/x/sys/unix"
 )
 

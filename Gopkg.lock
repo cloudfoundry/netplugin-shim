@@ -4,14 +4,18 @@
 [[projects]]
   branch = "master"
   name = "code.cloudfoundry.org/commandrunner"
-  packages = ["."]
+  packages = [
+    ".",
+    "fake_command_runner",
+    "linux_command_runner"
+  ]
   revision = "501fd662150bcea5a42a9b5c1c283209720788c3"
 
 [[projects]]
   branch = "master"
   name = "code.cloudfoundry.org/garden"
   packages = ["."]
-  revision = "9be3ff8a19cfd71fe251a5c0a260b34cba94f893"
+  revision = "3d82d212ad6731fc9e29d6b143046716122e49eb"
 
 [[projects]]
   branch = "master"
@@ -23,13 +27,12 @@
     "kawasaki/subnets",
     "netplugin"
   ]
-  revision = "9b35871cc983ecbe2798971a403a1b5eae0ec0f9"
+  revision = "4fb97734056dc1c1f3253633a6ef516005617453"
 
 [[projects]]
   name = "code.cloudfoundry.org/lager"
   packages = ["."]
-  revision = "0bfa98e49e7a976af91e918d47978f07c00b081f"
-  version = "v1.0.0"
+  revision = "b60e04e119450552243196105bae0d42179ee0ca"
 
 [[projects]]
   name = "github.com/cloudfoundry/dropsonde"
@@ -71,7 +74,7 @@
     "jlexer",
     "jwriter"
   ]
-  revision = "9825584555aa620c53c265d4a09ace0df1346fd9"
+  revision = "3fdea8d05856a0c8df22ed4bc71b3219245e4485"
 
 [[projects]]
   name = "github.com/onsi/ginkgo"
@@ -133,10 +136,9 @@
     "html/atom",
     "html/charset"
   ]
-  revision = "1e491301e022f8f977054da4c2d852decd59571f"
+  revision = "db08ff08e8622530d9ed3a0e8ac279f6d4c02196"
 
 [[projects]]
-  branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
   revision = "c11f84a56e43e20a78cee75a7c034031ecf57d1f"
@@ -174,6 +176,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "0f0b43c35802af73edd822086bf680296aa6c29387ea8f8b6fc9a4a04054a832"
+  inputs-digest = "eed21e9377202e3303d6aa254f31f1b0dd7dd0945785f44e48e294d43fae24d1"
   solver-name = "gps-cdcl"
   solver-version = 1

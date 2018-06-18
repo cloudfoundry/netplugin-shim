@@ -1,36 +1,40 @@
 package integration_test
 
 import (
+	"io/ioutil"
 	"os/exec"
-	"testing"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/onsi/gomega/gexec"
+
+	"testing"
 )
 
-func TestIntegration(t *testing.T) {
-	RegisterFailHandler(Fail)
-	RunSpecs(t, "Integration Suite")
-}
-
 var (
-	pluginPath string
-	daemonPath string
+	netpluginServerPath string
 )
 
 var _ = BeforeSuite(func() {
 	var err error
-	pluginPath, err = gexec.Build("code.cloudfoundry.org/netplugin-shim")
-	Expect(err).NotTo(HaveOccurred())
-
-	daemonPath, err = gexec.Build("code.cloudfoundry.org/netplugin-shim/fake-netplugin-daemon")
+	netpluginServerPath, err = gexec.Build("code.cloudfoundry.org/netplugin-shim/netplugin-server")
 	Expect(err).NotTo(HaveOccurred())
 })
 
 var _ = AfterSuite(func() {
 	gexec.CleanupBuildArtifacts()
 })
+
+func TestIntegration(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Server Integration Suite")
+}
+
+func tempDir(dir, prefix string) string {
+	name, err := ioutil.TempDir(dir, prefix)
+	Expect(err).NotTo(HaveOccurred())
+	return name
+}
 
 func gexecStart(cmd *exec.Cmd) *gexec.Session {
 	session, err := gexec.Start(cmd, GinkgoWriter, GinkgoWriter)
