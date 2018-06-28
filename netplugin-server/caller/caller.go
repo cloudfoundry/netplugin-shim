@@ -49,7 +49,7 @@ func (c *NetpluginCaller) Handle(conn net.Conn) error {
 
 	stdout, stderr := new(bytes.Buffer), new(bytes.Buffer)
 
-	args := append(c.extraArgs, "--action", "up", "--handle", string(msg.Handle))
+	args := append(c.extraArgs, "--action", string(msg.Command), "--handle", string(msg.Handle))
 
 	cmd := exec.Command(c.path, args...)
 	cmd.ExtraFiles = []*os.File{procNSFile}
@@ -57,13 +57,11 @@ func (c *NetpluginCaller) Handle(conn net.Conn) error {
 	cmd.Stdout = stdout
 	cmd.Stderr = stderr
 
-	if err := c.commandRunner.Run(cmd); err != nil {
-		return fmt.Errorf("Error while running netplugin: %s: %s", err.Error(), stderr.String())
-	}
-
+	err = c.commandRunner.Run(cmd)
 	reply := stdout.Bytes()
-	if stderr.Bytes() != nil {
-		reply = []byte(fmt.Sprintf(`{"Error": "%s"}`, stderr.String()))
+
+	if err != nil {
+		reply = []byte(fmt.Sprintf(`{"Error": "%v"}`, err))
 	}
 
 	if _, err := conn.Write(reply); err != nil {

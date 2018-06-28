@@ -79,8 +79,6 @@ var _ = Describe("NetpluginCaller", func() {
 				Data:    []byte(`{"Pid": 1001}`),
 			}
 
-			gardenPlugin.sendSocketMessage(msg)
-
 			netpluginActionFunc = func(cmd *exec.Cmd) error {
 				fmt.Fprint(cmd.Stdout, `{"Hey": "I succeeded"}`)
 				return nil
@@ -88,6 +86,8 @@ var _ = Describe("NetpluginCaller", func() {
 		})
 
 		JustBeforeEach(func() {
+			gardenPlugin.sendSocketMessage(msg)
+
 			commandRunner.WhenRunning(fake_command_runner.CommandSpec{
 				Path: "/path/to/plugin",
 			}, func(cmd *exec.Cmd) error {
@@ -128,8 +128,7 @@ var _ = Describe("NetpluginCaller", func() {
 		When("the netplugin fails", func() {
 			BeforeEach(func() {
 				netpluginActionFunc = func(cmd *exec.Cmd) error {
-					fmt.Fprint(cmd.Stderr, "Error executing plugin")
-					return nil
+					return errors.New("Error executing plugin")
 				}
 			})
 
@@ -137,6 +136,21 @@ var _ = Describe("NetpluginCaller", func() {
 				response, err := gardenPlugin.readResponseFromSocket(fakeGardenPluginConn)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(response["Error"]).To(Equal("Error executing plugin"))
+			})
+		})
+
+		When("the command is down", func() {
+			BeforeEach(func() {
+				msg = message.Message{
+					Command: []byte("down"),
+					Handle:  []byte("cake"),
+					Data:    []byte{},
+				}
+			})
+
+			It("calls the plugin with the down command as an argument", func() {
+				expectedArguments := []string{"--configFile", "/path/to/config", "--action", "down", "--handle", "cake"}
+				Expect(executedCommand.Args[1:]).To(Equal(expectedArguments))
 			})
 		})
 	})

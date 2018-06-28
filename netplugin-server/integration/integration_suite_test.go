@@ -2,6 +2,7 @@ package integration_test
 
 import (
 	"io/ioutil"
+	"os"
 	"os/exec"
 
 	. "github.com/onsi/ginkgo"
@@ -13,11 +14,14 @@ import (
 
 var (
 	netpluginServerPath string
+	fakeNetpluginPath   string
 )
 
 var _ = BeforeSuite(func() {
 	var err error
 	netpluginServerPath, err = gexec.Build("code.cloudfoundry.org/netplugin-shim/netplugin-server")
+	Expect(err).NotTo(HaveOccurred())
+	fakeNetpluginPath, err = gexec.Build("code.cloudfoundry.org/netplugin-shim/netplugin-server/fake-network-plugin")
 	Expect(err).NotTo(HaveOccurred())
 })
 
@@ -34,6 +38,12 @@ func tempDir(dir, prefix string) string {
 	name, err := ioutil.TempDir(dir, prefix)
 	Expect(err).NotTo(HaveOccurred())
 	return name
+}
+
+func tempFile(dir string) *os.File {
+	file, err := ioutil.TempFile(dir, "")
+	ExpectWithOffset(1, err).NotTo(HaveOccurred())
+	return file
 }
 
 func gexecStart(cmd *exec.Cmd) *gexec.Session {

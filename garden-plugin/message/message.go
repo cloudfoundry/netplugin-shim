@@ -6,3 +6,11 @@ type Message struct {
 	Handle  []byte
 	Data    []byte
 }
+
+func New(command, handle string, data []byte) Message {
+	return Message{
+		Command: []byte(command),
+		Handle:  []byte(handle),
+		Data:    data,
+	}
+}

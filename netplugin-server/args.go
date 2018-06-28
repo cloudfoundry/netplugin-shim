@@ -4,8 +4,8 @@ import flags "github.com/jessevdk/go-flags"
 
 type Args struct {
 	SocketPath    string   `long:"socket" required:"true"`
-	NetpluginPath string   `long:"netpluginPath" required:"true"`
-	NetpluginArgs []string `long:"netpluginArgs"`
+	NetpluginPath string   `long:"plugin-path" required:"true"`
+	NetpluginArgs []string `long:"plugin-arg"`
 }
 
 func parseArgs() (Args, error) {
