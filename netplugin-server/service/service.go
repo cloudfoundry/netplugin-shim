@@ -15,7 +15,7 @@ type Service struct {
 	logger    io.Writer
 }
 
-type handler func(net.Conn) error
+type handler func(*net.UnixConn) error
 
 func New(h handler) *Service {
 	s := &Service{

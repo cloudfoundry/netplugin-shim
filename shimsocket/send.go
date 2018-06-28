@@ -31,25 +31,6 @@ func Send(socketPath string, fd uintptr, msg message.Message) (*net.UnixConn, er
 	return conn, nil
 }
 
-func dial(socketPath string) (*net.UnixConn, error) {
-	address, err := net.ResolveUnixAddr("unix", socketPath)
-	if err != nil {
-		return nil, err
-	}
-
-	return net.DialUnix("unix", nil, address)
-}
-
-func sendFD(conn *net.UnixConn, fd uintptr) error {
-	socketControlMessage := unix.UnixRights(int(fd))
-	_, _, err := conn.WriteMsgUnix(nil, socketControlMessage, nil)
-	return err
-}
-
-func sendMessage(conn *net.UnixConn, msg message.Message) error {
-	return json.NewEncoder(conn).Encode(&msg)
-}
-
 func PassReply(conn net.Conn, writer io.Writer) error {
 	var output map[string]interface{}
 	if err := json.NewDecoder(conn).Decode(&output); err != nil {
@@ -67,4 +48,23 @@ func PassReply(conn net.Conn, writer io.Writer) error {
 	}
 
 	return nil
+}
+
+func dial(socketPath string) (*net.UnixConn, error) {
+	address, err := net.ResolveUnixAddr("unix", socketPath)
+	if err != nil {
+		return nil, err
+	}
+
+	return net.DialUnix("unix", nil, address)
+}
+
+func sendFD(conn *net.UnixConn, fd uintptr) error {
+	socketControlMessage := unix.UnixRights(int(fd))
+	_, _, err := conn.WriteMsgUnix(nil, socketControlMessage, nil)
+	return err
+}
+
+func sendMessage(conn *net.UnixConn, msg message.Message) error {
+	return json.NewEncoder(conn).Encode(&msg)
 }

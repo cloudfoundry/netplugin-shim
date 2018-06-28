@@ -63,8 +63,8 @@ var _ = Describe("Service", func() {
 	})
 })
 
-func handleFunc(buffer *gbytes.Buffer, limit int64) func(net.Conn) error {
-	return func(conn net.Conn) error {
+func handleFunc(buffer *gbytes.Buffer, limit int64) func(*net.UnixConn) error {
+	return func(conn *net.UnixConn) error {
 		reader := &io.LimitedReader{R: conn, N: limit}
 		data, err := ioutil.ReadAll(reader)
 		if err != nil {

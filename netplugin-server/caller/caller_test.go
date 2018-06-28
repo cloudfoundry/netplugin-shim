@@ -23,11 +23,11 @@ var _ = Describe("NetpluginCaller", func() {
 	var (
 		netpluginCaller   *caller.NetpluginCaller
 		commandRunner     *fake_command_runner.FakeCommandRunner
-		listener          net.Listener
+		listener          *net.UnixListener
 		socketPath        string
 		tmpFileToSend     *os.File
 		sendingConnection *net.UnixConn
-		handleConn        net.Conn
+		handleConn        *net.UnixConn
 		tmpDir            string
 	)
 
@@ -46,7 +46,10 @@ var _ = Describe("NetpluginCaller", func() {
 
 		socketPath = filepath.Join(tmpDir, "net-socket.sock")
 
-		listener, err = net.Listen("unix", socketPath)
+		addr, err := net.ResolveUnixAddr("unix", socketPath)
+		Expect(err).NotTo(HaveOccurred())
+
+		listener, err = net.ListenUnix("unix", addr)
 		Expect(err).NotTo(HaveOccurred())
 
 		netpluginCaller = caller.New("/path/to/plugin", []string{"--configFile", "/path/to/config"}).WithCommandRunner(commandRunner)
@@ -86,7 +89,7 @@ var _ = Describe("NetpluginCaller", func() {
 			sendingConnection, err = shimsocket.Send(socketPath, tmpFileToSend.Fd(), msg)
 			Expect(err).NotTo(HaveOccurred())
 
-			handleConn, err = listener.Accept()
+			handleConn, err = listener.AcceptUnix()
 			Expect(err).NotTo(HaveOccurred())
 
 			commandRunner.WhenRunning(fake_command_runner.CommandSpec{

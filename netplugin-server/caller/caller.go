@@ -2,18 +2,14 @@ package caller
 
 import (
 	"bytes"
-	"encoding/json"
-	"errors"
 	"fmt"
-	"io"
 	"net"
 	"os"
 	"os/exec"
 
 	"code.cloudfoundry.org/commandrunner"
 	"code.cloudfoundry.org/commandrunner/linux_command_runner"
-	"code.cloudfoundry.org/netplugin-shim/garden-plugin/message"
-	"golang.org/x/sys/unix"
+	"code.cloudfoundry.org/netplugin-shim/shimsocket"
 )
 
 type NetpluginCaller struct {
@@ -35,17 +31,12 @@ func (c *NetpluginCaller) WithCommandRunner(runner commandrunner.CommandRunner) 
 	return c
 }
 
-func (c *NetpluginCaller) Handle(conn net.Conn) error {
-	procNSFile, err := readNsFileDescriptor(conn)
+func (c *NetpluginCaller) Handle(conn *net.UnixConn) error {
+	procNSFile, msg, err := shimsocket.Receive(conn)
 	if err != nil {
 		return err
 	}
 	defer procNSFile.Close()
-
-	msg, err := decodeMsg(conn)
-	if err != nil {
-		return err
-	}
 
 	stdout, stderr := new(bytes.Buffer), new(bytes.Buffer)
 
@@ -69,77 +60,4 @@ func (c *NetpluginCaller) Handle(conn net.Conn) error {
 	}
 
 	return nil
-}
-
-func decodeMsg(r io.Reader) (message.Message, error) {
-	var content message.Message
-	decoder := json.NewDecoder(r)
-	if err := decoder.Decode(&content); err != nil {
-		return message.Message{}, err
-	}
-	return content, nil
-}
-
-func readNsFileDescriptor(conn net.Conn) (*os.File, error) {
-	unixconn, ok := conn.(*net.UnixConn)
-	if !ok {
-		return nil, errors.New("failed to cast connection to unixconn")
-	}
-
-	fd, err := recvFD(unixconn)
-	if err != nil {
-		return nil, err
-	}
-
-	return os.NewFile(fd, fmt.Sprintf("fd%d", fd)), nil
-}
-
-func recvFD(conn *net.UnixConn) (uintptr, error) {
-	controlMessageBytesSpace := unix.CmsgSpace(4)
-
-	controlMessageBytes := make([]byte, controlMessageBytesSpace)
-	_, readSocketControlMessageBytes, _, _, err := conn.ReadMsgUnix(nil, controlMessageBytes)
-	if err != nil {
-		return 0, err
-	}
-
-	if readSocketControlMessageBytes > controlMessageBytesSpace {
-		return 0, errors.New("received too many things")
-	}
-
-	controlMessageBytes = controlMessageBytes[:readSocketControlMessageBytes]
-
-	socketControlMessages, err := parseSocketControlMessage(controlMessageBytes)
-	if err != nil {
-		return 0, err
-	}
-
-	fds, err := parseUnixRights(&socketControlMessages[0])
-	if err != nil {
-		return 0, err
-	}
-
-	return uintptr(fds[0]), nil
-}
-
-func parseUnixRights(m *unix.SocketControlMessage) ([]int, error) {
-	messages, err := unix.ParseUnixRights(m)
-	if err != nil {
-		return nil, err
-	}
-	if len(messages) != 1 {
-		return nil, errors.New("no messages parsed")
-	}
-	return messages, nil
-}
-
-func parseSocketControlMessage(b []byte) ([]unix.SocketControlMessage, error) {
-	messages, err := unix.ParseSocketControlMessage(b)
-	if err != nil {
-		return nil, err
-	}
-	if len(messages) != 1 {
-		return nil, errors.New("no messages parsed")
-	}
-	return messages, nil
 }
