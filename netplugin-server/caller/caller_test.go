@@ -1,7 +1,7 @@
 package caller_test
 
 import (
-	"encoding/json"
+	"bytes"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -13,7 +13,7 @@ import (
 	"code.cloudfoundry.org/commandrunner/fake_command_runner"
 	"code.cloudfoundry.org/netplugin-shim/garden-plugin/message"
 	"code.cloudfoundry.org/netplugin-shim/netplugin-server/caller"
-	"golang.org/x/sys/unix"
+	"code.cloudfoundry.org/netplugin-shim/shimsocket"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -21,15 +21,14 @@ import (
 
 var _ = Describe("NetpluginCaller", func() {
 	var (
-		netpluginCaller      *caller.NetpluginCaller
-		commandRunner        *fake_command_runner.FakeCommandRunner
-		listener             net.Listener
-		socketPath           string
-		gardenPlugin         FakeGardenPlugin
-		tmpFileToSend        *os.File
-		fakeGardenPluginConn net.Conn
-		handleConn           net.Conn
-		tmpDir               string
+		netpluginCaller   *caller.NetpluginCaller
+		commandRunner     *fake_command_runner.FakeCommandRunner
+		listener          net.Listener
+		socketPath        string
+		tmpFileToSend     *os.File
+		sendingConnection *net.UnixConn
+		handleConn        net.Conn
+		tmpDir            string
 	)
 
 	BeforeEach(func() {
@@ -50,19 +49,13 @@ var _ = Describe("NetpluginCaller", func() {
 		listener, err = net.Listen("unix", socketPath)
 		Expect(err).NotTo(HaveOccurred())
 
-		fakeGardenPluginConn, err = net.Dial("unix", socketPath)
-		Expect(err).NotTo(HaveOccurred())
-
-		handleConn, err = listener.Accept()
-		Expect(err).NotTo(HaveOccurred())
-
 		netpluginCaller = caller.New("/path/to/plugin", []string{"--configFile", "/path/to/config"}).WithCommandRunner(commandRunner)
-		gardenPlugin = FakeGardenPlugin{connection: fakeGardenPluginConn, fileToSend: tmpFileToSend}
 	})
 
 	AfterEach(func() {
 		Expect(os.RemoveAll(tmpDir)).To(Succeed())
-		fakeGardenPluginConn.Close()
+		sendingConnection.Close()
+		handleConn.Close()
 	})
 
 	Context("when a message is received on the socket", func() {
@@ -70,6 +63,7 @@ var _ = Describe("NetpluginCaller", func() {
 			msg                 message.Message
 			executedCommand     *exec.Cmd
 			netpluginActionFunc func(cmd *exec.Cmd) error
+			replyBuffer         *bytes.Buffer
 		)
 
 		BeforeEach(func() {
@@ -83,10 +77,17 @@ var _ = Describe("NetpluginCaller", func() {
 				fmt.Fprint(cmd.Stdout, `{"Hey": "I succeeded"}`)
 				return nil
 			}
+
+			replyBuffer = new(bytes.Buffer)
 		})
 
 		JustBeforeEach(func() {
-			gardenPlugin.sendSocketMessage(msg)
+			var err error
+			sendingConnection, err = shimsocket.Send(socketPath, tmpFileToSend.Fd(), msg)
+			Expect(err).NotTo(HaveOccurred())
+
+			handleConn, err = listener.Accept()
+			Expect(err).NotTo(HaveOccurred())
 
 			commandRunner.WhenRunning(fake_command_runner.CommandSpec{
 				Path: "/path/to/plugin",
@@ -120,9 +121,8 @@ var _ = Describe("NetpluginCaller", func() {
 		})
 
 		It("propagates the output of the netplugin to the socket", func() {
-			response, err := gardenPlugin.readResponseFromSocket(fakeGardenPluginConn)
-			Expect(err).NotTo(HaveOccurred())
-			Expect(response["Hey"]).To(Equal("I succeeded"))
+			Expect(shimsocket.PassReply(sendingConnection, replyBuffer)).To(Succeed())
+			Expect(replyBuffer.String()).To(MatchJSON(`{"Hey": "I succeeded"}`))
 		})
 
 		When("the netplugin fails", func() {
@@ -133,9 +133,8 @@ var _ = Describe("NetpluginCaller", func() {
 			})
 
 			It("propagate the error back to the socket", func() {
-				response, err := gardenPlugin.readResponseFromSocket(fakeGardenPluginConn)
-				Expect(err).NotTo(HaveOccurred())
-				Expect(response["Error"]).To(Equal("Error executing plugin"))
+				Expect(shimsocket.PassReply(sendingConnection, replyBuffer)).NotTo(Succeed())
+				Expect(replyBuffer.String()).To(MatchJSON(`{"Error": "Error executing plugin"}`))
 			})
 		})
 
@@ -155,32 +154,3 @@ var _ = Describe("NetpluginCaller", func() {
 		})
 	})
 })
-
-type FakeGardenPlugin struct {
-	connection net.Conn
-	fileToSend *os.File
-}
-
-func (gp *FakeGardenPlugin) sendSocketMessage(msg message.Message) {
-	socketControlMessage := unix.UnixRights(int(gp.fileToSend.Fd()))
-	socket := gp.connection.(*net.UnixConn)
-	_, _, err := socket.WriteMsgUnix(nil, socketControlMessage, nil)
-	Expect(err).NotTo(HaveOccurred())
-
-	encoder := json.NewEncoder(gp.connection)
-	Expect(encoder.Encode(msg)).To(Succeed())
-}
-
-func (gp *FakeGardenPlugin) readResponseFromSocket(conn net.Conn) (map[string]interface{}, error) {
-	unixconn, ok := conn.(*net.UnixConn)
-	if !ok {
-		return nil, errors.New("failed to cast connection to unixconn")
-	}
-
-	var output map[string]interface{}
-	if err := json.NewDecoder(unixconn).Decode(&output); err != nil {
-		return nil, err
-	}
-
-	return output, nil
-}
