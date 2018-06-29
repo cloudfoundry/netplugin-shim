@@ -2,6 +2,7 @@ package caller_test
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -11,6 +12,7 @@ import (
 	"path/filepath"
 
 	"code.cloudfoundry.org/commandrunner/fake_command_runner"
+	"code.cloudfoundry.org/lager/lagertest"
 	"code.cloudfoundry.org/netplugin-shim/garden-plugin/message"
 	"code.cloudfoundry.org/netplugin-shim/netplugin-server/caller"
 	"code.cloudfoundry.org/netplugin-shim/shimsocket"
@@ -29,9 +31,11 @@ var _ = Describe("NetpluginCaller", func() {
 		sendingConnection *net.UnixConn
 		handleConn        *net.UnixConn
 		tmpDir            string
+		logger            *lagertest.TestLogger
 	)
 
 	BeforeEach(func() {
+		logger = lagertest.NewTestLogger("foo")
 		commandRunner = fake_command_runner.New()
 
 		var err error
@@ -52,7 +56,7 @@ var _ = Describe("NetpluginCaller", func() {
 		listener, err = net.ListenUnix("unix", addr)
 		Expect(err).NotTo(HaveOccurred())
 
-		netpluginCaller = caller.New("/path/to/plugin", []string{"--configFile", "/path/to/config"}).WithCommandRunner(commandRunner)
+		netpluginCaller = caller.New(logger, "/path/to/plugin", []string{"--configFile", "/path/to/config"}).WithCommandRunner(commandRunner)
 	})
 
 	AfterEach(func() {
@@ -153,6 +157,20 @@ var _ = Describe("NetpluginCaller", func() {
 			It("calls the plugin with the down command as an argument", func() {
 				expectedArguments := []string{"--configFile", "/path/to/config", "--action", "down", "--handle", "cake"}
 				Expect(executedCommand.Args[1:]).To(Equal(expectedArguments))
+			})
+		})
+
+		When("the network plugin outputs nothing", func() {
+			BeforeEach(func() {
+				netpluginActionFunc = func(cmd *exec.Cmd) error {
+					return nil
+				}
+			})
+
+			It("sends valid JSON to the socket", func() {
+				var output map[string]interface{}
+				handleConn.Close()
+				Expect(json.NewDecoder(sendingConnection).Decode(&output)).To(Succeed())
 			})
 		})
 	})

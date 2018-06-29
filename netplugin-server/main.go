@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/signal"
 
+	"code.cloudfoundry.org/lager"
 	"code.cloudfoundry.org/netplugin-shim/netplugin-server/caller"
 	"code.cloudfoundry.org/netplugin-shim/netplugin-server/service"
 	"golang.org/x/sys/unix"
@@ -21,7 +22,8 @@ func main() {
 	listener, err := net.ListenUnix("unix", addr)
 	exitOn(err)
 
-	netpluginCaller := caller.New(args.NetpluginPath, args.NetpluginArgs)
+	log := initLogger("netplugin-server")
+	netpluginCaller := caller.New(log, args.NetpluginPath, args.NetpluginArgs)
 
 	server := service.New(netpluginCaller.Handle).WithLogger(os.Stderr)
 
@@ -39,4 +41,13 @@ func exitOn(err error) {
 		fmt.Fprint(os.Stderr, err.Error())
 		os.Exit(1)
 	}
+}
+
+func initLogger(component string) lager.Logger {
+	internalSink := lager.NewPrettySink(os.Stdout, lager.DEBUG)
+	logger := lager.NewLogger(component)
+	sink := lager.NewReconfigurableSink(internalSink, lager.DEBUG)
+	logger.RegisterSink(sink)
+
+	return logger
 }

@@ -9,6 +9,7 @@ import (
 
 	"code.cloudfoundry.org/commandrunner"
 	"code.cloudfoundry.org/commandrunner/linux_command_runner"
+	"code.cloudfoundry.org/lager"
 	"code.cloudfoundry.org/netplugin-shim/shimsocket"
 )
 
@@ -16,13 +17,15 @@ type NetpluginCaller struct {
 	path          string
 	extraArgs     []string
 	commandRunner commandrunner.CommandRunner
+	logger        lager.Logger
 }
 
-func New(path string, extraArgs []string) *NetpluginCaller {
+func New(logger lager.Logger, path string, extraArgs []string) *NetpluginCaller {
 	return &NetpluginCaller{
 		path:          path,
 		extraArgs:     extraArgs,
 		commandRunner: linux_command_runner.New(),
+		logger:        logger,
 	}
 }
 
@@ -32,8 +35,13 @@ func (c *NetpluginCaller) WithCommandRunner(runner commandrunner.CommandRunner) 
 }
 
 func (c *NetpluginCaller) Handle(conn *net.UnixConn) error {
+	logger := c.logger.Session("handle")
+	logger.Info("start")
+	defer logger.Info("end")
+
 	procNSFile, msg, err := shimsocket.Receive(conn)
 	if err != nil {
+		logger.Error("error-receiving-message", err)
 		return err
 	}
 	defer procNSFile.Close()
@@ -48,14 +56,21 @@ func (c *NetpluginCaller) Handle(conn *net.UnixConn) error {
 	cmd.Stdout = stdout
 	cmd.Stderr = stderr
 
+	logger.Debug("calling-external-network-plugin", lager.Data{"procNSFile": procNSFile.Fd(), "message": msg.String()})
 	err = c.commandRunner.Run(cmd)
 	reply := stdout.Bytes()
 
+	if len(reply) == 0 {
+		reply = []byte("{}")
+	}
+
 	if err != nil {
+		logger.Error("error-calling-external-network-plugin", err, lager.Data{"procNSFile": procNSFile.Fd(), "message": msg.String(), "stdout": stdout.String(), "stderr": stderr.String()})
 		reply = []byte(fmt.Sprintf(`{"Error": "%v"}`, err))
 	}
 
 	if _, err := conn.Write(reply); err != nil {
+		logger.Error("error-responding", err, lager.Data{"procNSFile": procNSFile.Fd(), "message": msg.String()})
 		return err
 	}
 
