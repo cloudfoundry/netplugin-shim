@@ -47,7 +47,7 @@ func receiveFD(conn *net.UnixConn) (uintptr, error) {
 	}
 
 	if readSocketControlMessageBytes > controlMessageBytesSpace {
-		return 0, errors.New("received too many things")
+		return 0, errors.New("received too many bytes from socket control message")
 	}
 
 	controlMessageBytes = controlMessageBytes[:readSocketControlMessageBytes]
