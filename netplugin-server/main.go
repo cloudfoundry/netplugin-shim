@@ -22,6 +22,9 @@ func main() {
 	listener, err := net.ListenUnix("unix", addr)
 	exitOn(err)
 
+	err = os.Chmod(args.SocketPath, 0622)
+	exitOn(err)
+
 	log := initLogger("netplugin-server")
 	netpluginCaller := caller.New(log, args.NetpluginPath, args.NetpluginArgs)
 

@@ -53,6 +53,14 @@ var _ = Describe("Integration", func() {
 		Expect(os.RemoveAll(tmpDir)).To(Succeed())
 	})
 
+	It("creates the socket with proper permissions", func() {
+		Eventually(socket).Should(BeAnExistingFile())
+		info, err := os.Stat(socket)
+		Expect(err).NotTo(HaveOccurred())
+
+		Expect(info.Mode() & os.ModePerm).To(Equal(os.FileMode(0622)))
+	})
+
 	It("listens on the provided socket path", func() {
 		dial := func() error {
 			_, err := net.Dial("unix", filepath.Join(tmpDir, "sock.sock"))
