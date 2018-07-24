@@ -21,6 +21,8 @@ import (
 	"golang.org/x/sys/unix"
 )
 
+const waitDuration = time.Second * 10
+
 var _ = Describe("Integration", func() {
 	var (
 		workDir     string
@@ -65,9 +67,9 @@ var _ = Describe("Integration", func() {
 	})
 
 	AfterEach(func() {
-		Expect(initSession.Terminate().Wait()).To(gexec.Exit())
-		Expect(shimSession.Wait()).To(gexec.Exit())
-		Expect(daemonSession.Terminate().Wait()).To(gexec.Exit())
+		Expect(initSession.Terminate().Wait(waitDuration)).To(gexec.Exit())
+		Expect(shimSession.Wait(waitDuration)).To(gexec.Exit())
+		Expect(daemonSession.Terminate().Wait(waitDuration)).To(gexec.Exit())
 		Expect(os.RemoveAll(workDir)).To(Succeed())
 	})
 
@@ -84,7 +86,7 @@ var _ = Describe("Integration", func() {
 		})
 
 		It("exits successfully", func() {
-			Expect(shimSession.Wait()).To(gexec.Exit(0))
+			Expect(shimSession.Wait(waitDuration)).To(gexec.Exit(0))
 		})
 
 		It("sends the net ns fd of the provided pid to the socket", func() {
@@ -114,13 +116,13 @@ var _ = Describe("Integration", func() {
 		})
 
 		It("writes JSON to stdout", func() {
-			Expect(shimSession.Wait()).To(gexec.Exit())
+			Expect(shimSession.Wait(waitDuration)).To(gexec.Exit())
 			stdout := struct{}{}
 			Expect(json.Unmarshal(shimSession.Out.Contents(), &stdout)).To(Succeed())
 		})
 
 		It("writes the network daemon's response to stdout", func() {
-			Expect(shimSession.Wait()).To(gexec.Exit())
+			Expect(shimSession.Wait(waitDuration)).To(gexec.Exit())
 			stdout := string(shimSession.Out.Contents())
 			Expect(strings.TrimSpace(stdout)).To(MatchJSON(`{"Here":"Be Dragons"}`))
 		})
@@ -131,13 +133,13 @@ var _ = Describe("Integration", func() {
 			})
 
 			It("writes the response to stderr", func() {
-				Expect(shimSession.Wait()).To(gexec.Exit())
+				Expect(shimSession.Wait(waitDuration)).To(gexec.Exit())
 				stderr := string(shimSession.Err.Contents())
 				Expect(stderr).To(ContainSubstring("no dragons received"))
 			})
 
 			It("exits non zero", func() {
-				Expect(shimSession.Wait()).NotTo(gexec.Exit(0))
+				Expect(shimSession.Wait(waitDuration)).NotTo(gexec.Exit(0))
 			})
 
 		})
@@ -150,7 +152,7 @@ var _ = Describe("Integration", func() {
 		})
 
 		It("exits successfully", func() {
-			Expect(shimSession.Wait()).To(gexec.Exit(0))
+			Expect(shimSession.Wait(waitDuration)).To(gexec.Exit(0))
 		})
 
 		It("sends the command to the socket", func() {
