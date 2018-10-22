@@ -38,7 +38,8 @@ var _ = Describe("Service", func() {
 			s := service.New(handleFunc(buffer, int64(len(message)))).WithLogger(GinkgoWriter)
 			go s.Serve(listener)
 
-			conn := dialUnix(address)
+			conn, err := net.DialUnix("unix", nil, address)
+			Expect(err).NotTo(HaveOccurred())
 			defer conn.Close()
 			writeString(conn, message)
 
@@ -48,17 +49,17 @@ var _ = Describe("Service", func() {
 		})
 	})
 
-	It("should fail when writing to the socket after stop", func() {
-		message := "bbbbbbbbbb"
-		s := service.New(handleFunc(buffer, int64(len(message)))).WithLogger(GinkgoWriter)
+	It("should fail to initiate new connections after stop", func() {
+		s := service.New(func(*net.UnixConn) error { return nil }).WithLogger(GinkgoWriter)
 		go s.Serve(listener)
-		conn := dialUnix(address)
-		defer conn.Close()
+
+		conn, err := net.DialUnix("unix", nil, address)
+		Expect(err).NotTo(HaveOccurred())
+		conn.Close()
 
 		s.Stop()
 
-		_, err := io.WriteString(conn, "bbbbbbbbbb")
-
+		_, err = net.DialUnix("unix", nil, address)
 		Expect(err).To(HaveOccurred())
 	})
 })

@@ -62,11 +62,14 @@ var _ = Describe("Integration", func() {
 	})
 
 	It("listens on the provided socket path", func() {
+		var conn net.Conn
 		dial := func() error {
-			_, err := net.Dial("unix", filepath.Join(tmpDir, "sock.sock"))
+			var err error
+			conn, err = net.Dial("unix", filepath.Join(tmpDir, "sock.sock"))
 			return err
 		}
 		Eventually(dial).Should(Succeed())
+		Expect(conn.Close()).To(Succeed())
 	})
 
 	It("calls the netplugin and receives a response", func() {

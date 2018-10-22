@@ -53,10 +53,10 @@ func (s *Service) Serve(listener *net.UnixListener) {
 
 		conn, err := listener.AcceptUnix()
 		if err != nil {
-			if opErr, ok := err.(*net.OpError); ok && opErr.Timeout() {
-				continue
+			if opErr, ok := err.(*net.OpError); ok && !opErr.Timeout() {
+				s.log(fmt.Sprintf("failed to accept unix connection: %v", err))
 			}
-			s.log(fmt.Sprintf("failed to accept unix connection: %v", err))
+			continue
 		}
 		s.waitGroup.Add(1)
 		go s.serve(conn)
@@ -71,13 +71,6 @@ func (s *Service) Stop() {
 func (s *Service) serve(conn *net.UnixConn) {
 	defer conn.Close()
 	defer s.waitGroup.Done()
-
-	//TODO: pick sensible value for this
-	err := conn.SetDeadline(time.Now().Add(time.Millisecond * 800))
-	if err != nil {
-		s.log(fmt.Sprintf("failed to set deadline on connection: %v", err))
-		return
-	}
 
 	if err := s.handle(conn); err != nil {
 		s.log(fmt.Sprintf("failed to handle: %v", err))
