@@ -15,11 +15,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:829d488f1c7018eb2e567c547a0905e0f7a2c3bd0bd77dd2a5a333027e33ba50"
+  digest = "1:6b6a2168f4df1a62d7a32e84d582b3dba6b435779486bfb43d078ae39df4ecd7"
   name = "code.cloudfoundry.org/garden"
   packages = ["."]
   pruneopts = "UT"
-  revision = "3d82d212ad6731fc9e29d6b143046716122e49eb"
+  revision = "62470dc86365fb365be099df5c4b59650d695c4b"
 
 [[projects]]
   branch = "master"

@@ -237,11 +237,13 @@ type ContainerInfoEntry struct {
 }
 
 type Metrics struct {
-	MemoryStat  ContainerMemoryStat
-	CPUStat     ContainerCPUStat
-	DiskStat    ContainerDiskStat
-	NetworkStat ContainerNetworkStat
-	PidStat     ContainerPidStat
+	MemoryStat     ContainerMemoryStat
+	CPUStat        ContainerCPUStat
+	DiskStat       ContainerDiskStat
+	NetworkStat    ContainerNetworkStat
+	PidStat        ContainerPidStat
+	Age            time.Duration
+	CPUEntitlement uint64
 }
 
 type ContainerMetricsEntry struct {
@@ -339,6 +341,8 @@ type MemoryLimits struct {
 }
 
 type CPULimits struct {
+	Weight uint64 `json:"weight,omitempty"`
+	// Deprecated: Use Weight instead.
 	LimitInShares uint64 `json:"limit_in_shares,omitempty"`
 }
 
