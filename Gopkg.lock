@@ -3,84 +3,105 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:24fb07bf85b973ccf6f5d423383594a2fc61fe2f7b98e356dffbf74af58d341f"
   name = "code.cloudfoundry.org/commandrunner"
   packages = [
     ".",
     "fake_command_runner",
-    "linux_command_runner"
+    "linux_command_runner",
   ]
+  pruneopts = "UT"
   revision = "501fd662150bcea5a42a9b5c1c283209720788c3"
 
 [[projects]]
   branch = "master"
+  digest = "1:829d488f1c7018eb2e567c547a0905e0f7a2c3bd0bd77dd2a5a333027e33ba50"
   name = "code.cloudfoundry.org/garden"
   packages = ["."]
+  pruneopts = "UT"
   revision = "3d82d212ad6731fc9e29d6b143046716122e49eb"
 
 [[projects]]
   branch = "master"
+  digest = "1:7a19b84a03f7a1a1d2aa72fedccfe30e1eaba77485cf984eb0b59d19d273c399"
   name = "code.cloudfoundry.org/guardian"
   packages = [
     "gardener",
     "gardener/container-spec",
     "kawasaki",
     "kawasaki/subnets",
-    "netplugin"
+    "netplugin",
   ]
-  revision = "4fb97734056dc1c1f3253633a6ef516005617453"
+  pruneopts = "UT"
+  revision = "0c56b11202628b7bc65fe89d3ad9efe3e816340a"
 
 [[projects]]
+  branch = "master"
+  digest = "1:6c688b84432af47be12098f3c12bed8a4dbecb5df6572b0bae5cd6d76f8df2ed"
   name = "code.cloudfoundry.org/lager"
   packages = [
     ".",
+    "internal/truncate",
     "lagerctx",
-    "lagertest"
+    "lagertest",
   ]
-  revision = "b60e04e119450552243196105bae0d42179ee0ca"
+  pruneopts = "UT"
+  revision = "54c4f2530ddeb742ce9c9ee26f5fa758d6c1b3b6"
 
 [[projects]]
+  digest = "1:757c144130b4b83eec6656bad66c908362592d9fdbe7f2302e2ce9c453745ac4"
   name = "github.com/cloudfoundry/dropsonde"
   packages = [
     "metric_sender",
-    "metrics"
+    "metrics",
   ]
+  pruneopts = "UT"
   revision = "fe07f64fd1fd25f3c920e9183edd71de6895f1d8"
   version = "v1.0.0"
 
 [[projects]]
   branch = "master"
+  digest = "1:e40a214426e6825d5c4067ebbb788c06be08ef657918e45a8f7fc45685431098"
   name = "github.com/cloudfoundry/sonde-go"
   packages = ["events"]
+  pruneopts = "UT"
   revision = "b33733203bb48d7c56de7cb639d77f78b0449d19"
 
 [[projects]]
+  digest = "1:8f13f978d35181fada0ea713c14a224f2b329fa91c13438b2811331ecd8b16e1"
   name = "github.com/gogo/protobuf"
   packages = [
     "gogoproto",
     "proto",
-    "protoc-gen-gogo/descriptor"
+    "protoc-gen-gogo/descriptor",
   ]
+  pruneopts = "UT"
   revision = "1adfc126b41513cc696b209667c8656ea7aac67c"
   version = "v1.0.0"
 
 [[projects]]
+  digest = "1:a2cff208d4759f6ba1b1cd228587b0a1869f95f22542ec9cd17fff64430113c7"
   name = "github.com/jessevdk/go-flags"
   packages = ["."]
+  pruneopts = "UT"
   revision = "c6ca198ec95c841fdb89fc0de7496fed11ab854e"
   version = "v1.4.0"
 
 [[projects]]
   branch = "master"
+  digest = "1:2da7bec9de8b02fc88298d5b7c3eec18b3d2c114e6739c550f3f99a12eec0bf4"
   name = "github.com/mailru/easyjson"
   packages = [
     ".",
     "buffer",
     "jlexer",
-    "jwriter"
+    "jwriter",
   ]
+  pruneopts = "UT"
   revision = "3fdea8d05856a0c8df22ed4bc71b3219245e4485"
 
 [[projects]]
+  digest = "1:72f35d3e412bc67b121e15ea4c88a3b3da8bcbc2264339e7ffa4a1865799840c"
   name = "github.com/onsi/ginkgo"
   packages = [
     ".",
@@ -100,12 +121,14 @@
     "reporters/stenographer",
     "reporters/stenographer/support/go-colorable",
     "reporters/stenographer/support/go-isatty",
-    "types"
+    "types",
   ]
+  pruneopts = "UT"
   revision = "fa5fabab2a1bfbd924faf4c067d07ae414e2aedf"
   version = "v1.5.0"
 
 [[projects]]
+  digest = "1:714c6da391ddef79e2a4f0a892352e203d554f95370fe2c16417071022bc5da1"
   name = "github.com/onsi/gomega"
   packages = [
     ".",
@@ -121,33 +144,40 @@
     "matchers/support/goraph/edge",
     "matchers/support/goraph/node",
     "matchers/support/goraph/util",
-    "types"
+    "types",
   ]
+  pruneopts = "UT"
   revision = "62bff4df71bdbc266561a0caee19f0594b17c240"
   version = "v1.4.0"
 
 [[projects]]
+  digest = "1:f0babbbbff9937ca3f623de4e73e0faadf58379479406fded2014b9e0d585150"
   name = "github.com/opencontainers/runtime-spec"
   packages = ["specs-go"]
-  revision = "4e3b9264a330d094b0386c3703c5f379119711e8"
-  version = "v1.0.1"
+  pruneopts = "UT"
+  revision = "eba862dc2470385a233c7507392675cbeadf7353"
 
 [[projects]]
   branch = "master"
+  digest = "1:e2a579de26b74a8d2a7c4eba30ec65d895ef4cede50639d654734558cd2a917e"
   name = "golang.org/x/net"
   packages = [
     "html",
     "html/atom",
-    "html/charset"
+    "html/charset",
   ]
+  pruneopts = "UT"
   revision = "db08ff08e8622530d9ed3a0e8ac279f6d4c02196"
 
 [[projects]]
+  digest = "1:fcf2b18db0af0f60d58e71ae8ed15555d46fdca3fc2529f65a14cef30ced981f"
   name = "golang.org/x/sys"
   packages = ["unix"]
+  pruneopts = "UT"
   revision = "c11f84a56e43e20a78cee75a7c034031ecf57d1f"
 
 [[projects]]
+  digest = "1:aa4d6967a3237f8367b6bf91503964a77183ecf696f1273e8ad3551bb4412b5f"
   name = "golang.org/x/text"
   packages = [
     "encoding",
@@ -166,20 +196,36 @@
     "language",
     "runes",
     "transform",
-    "unicode/cldr"
+    "unicode/cldr",
   ]
+  pruneopts = "UT"
   revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
   version = "v0.3.0"
 
 [[projects]]
+  digest = "1:342378ac4dcb378a5448dd723f0784ae519383532f5e70ade24132c4c8693202"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
+  pruneopts = "UT"
   revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
   version = "v2.2.1"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5d71350be901ac457421aaff9233219671d900bd24bfe7391134c5fd2ee1b633"
+  input-imports = [
+    "code.cloudfoundry.org/commandrunner",
+    "code.cloudfoundry.org/commandrunner/fake_command_runner",
+    "code.cloudfoundry.org/commandrunner/linux_command_runner",
+    "code.cloudfoundry.org/guardian/netplugin",
+    "code.cloudfoundry.org/lager",
+    "code.cloudfoundry.org/lager/lagertest",
+    "github.com/jessevdk/go-flags",
+    "github.com/onsi/ginkgo",
+    "github.com/onsi/gomega",
+    "github.com/onsi/gomega/gbytes",
+    "github.com/onsi/gomega/gexec",
+    "golang.org/x/sys/unix",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1

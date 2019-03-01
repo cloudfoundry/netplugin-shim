@@ -37,6 +37,7 @@ const VolumizerSession = "volumizer"
 type SysInfoProvider interface {
 	TotalMemory() (uint64, error)
 	TotalDisk() (uint64, error)
+	CPUCores() (int, error)
 }
 
 type Containerizer interface {
@@ -54,6 +55,7 @@ type Containerizer interface {
 
 	Info(log lager.Logger, handle string) (spec.ActualContainerSpec, error)
 	Metrics(log lager.Logger, handle string) (ActualContainerMetrics, error)
+	WatchRuntimeEvents(log lager.Logger) error
 }
 
 type Networker interface {
@@ -113,10 +115,16 @@ func (fn UidGeneratorFunc) Generate() string {
 	return fn()
 }
 
-type ActualContainerMetrics struct {
+type StatsContainerMetrics struct {
 	CPU    garden.ContainerCPUStat
 	Memory garden.ContainerMemoryStat
 	Pid    garden.ContainerPidStat
+	Age    time.Duration
+}
+
+type ActualContainerMetrics struct {
+	StatsContainerMetrics
+	CPUEntitlement uint64
 }
 
 // Gardener orchestrates other components to implement the Garden API
@@ -291,7 +299,7 @@ func (g *Gardener) Destroy(handle string) error {
 		return err
 	}
 
-	if !g.exists(handles, handle) {
+	if !exists(handles, handle) {
 		return garden.ContainerNotFoundError{Handle: handle}
 	}
 
@@ -427,14 +435,14 @@ func (g *Gardener) BulkMetrics(handles []string) (map[string]garden.ContainerMet
 }
 
 func (g *Gardener) checkDuplicateHandle(knownHandles []string, handle string) error {
-	if g.exists(knownHandles, handle) {
+	if exists(knownHandles, handle) {
 		return fmt.Errorf("Handle '%s' already in use", handle)
 	}
 
 	return nil
 }
 
-func (g *Gardener) exists(handles []string, handle string) bool {
+func exists(handles []string, handle string) bool {
 	for _, h := range handles {
 		if h == handle {
 			return true
@@ -462,10 +470,22 @@ func (g *Gardener) Start() error {
 	log.Info("starting")
 	defer log.Info("completed")
 
+	if err := g.Containerizer.WatchRuntimeEvents(log); err != nil {
+		return fmt.Errorf("watch runtime events: %s", err)
+	}
+
 	if err := g.BulkStarter.StartAll(); err != nil {
 		return fmt.Errorf("bulk starter: %s", err)
 	}
 
+	if err := g.Cleanup(log); err != nil {
+		return fmt.Errorf("cleanup: %s", err)
+	}
+
+	return nil
+}
+
+func (g *Gardener) Cleanup(log lager.Logger) error {
 	if err := g.PeaCleaner.CleanAll(log); err != nil {
 		return fmt.Errorf("clean peas: %s", err)
 	}

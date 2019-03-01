@@ -146,10 +146,12 @@ func (c *container) Metrics() (garden.Metrics, error) {
 	}
 
 	return garden.Metrics{
-		CPUStat:    actualContainerMetrics.CPU,
-		MemoryStat: actualContainerMetrics.Memory,
-		DiskStat:   diskMetrics,
-		PidStat:    actualContainerMetrics.Pid,
+		CPUStat:        actualContainerMetrics.CPU,
+		MemoryStat:     actualContainerMetrics.Memory,
+		DiskStat:       diskMetrics,
+		PidStat:        actualContainerMetrics.Pid,
+		Age:            actualContainerMetrics.Age,
+		CPUEntitlement: actualContainerMetrics.CPUEntitlement,
 	}, nil
 }
 
