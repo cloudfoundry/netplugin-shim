@@ -14,7 +14,7 @@ require (
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/mailru/easyjson v0.0.0-20180606163543-3fdea8d05856 // indirect
 	github.com/onsi/ginkgo v1.8.0
-	github.com/onsi/gomega v1.4.3
+	github.com/onsi/gomega v1.5.0
 	github.com/opencontainers/runtime-spec v0.0.0-20180909173843-eba862dc2470 // indirect
 	github.com/poy/eachers v0.0.0-20181020210610-23942921fe77 // indirect
 	golang.org/x/sys v0.0.0-20180909124046-d0be0721c37e
