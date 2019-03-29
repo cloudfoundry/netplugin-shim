@@ -17,5 +17,5 @@ require (
 	github.com/onsi/gomega v1.5.0
 	github.com/opencontainers/runtime-spec v0.0.0-20180909173843-eba862dc2470 // indirect
 	github.com/poy/eachers v0.0.0-20181020210610-23942921fe77 // indirect
-	golang.org/x/sys v0.0.0-20180909124046-d0be0721c37e
+	golang.org/x/sys v0.0.0-20190329044733-9eb1bfa1ce65
 )
