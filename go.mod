@@ -3,7 +3,7 @@ module code.cloudfoundry.org/netplugin-shim
 go 1.12
 
 require (
-	code.cloudfoundry.org/commandrunner v0.0.0-20180212143422-501fd662150b
+	code.cloudfoundry.org/commandrunner v0.0.0-20180212143422-501fd662150b // indirect
 	code.cloudfoundry.org/garden v0.0.0-20181108172608-62470dc86365 // indirect
 	code.cloudfoundry.org/guardian v0.0.0-20190301164252-0c56b1120262
 	code.cloudfoundry.org/lager v0.0.0-20190115020142-54c4f2530dde

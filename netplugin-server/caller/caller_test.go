@@ -11,10 +11,10 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"code.cloudfoundry.org/commandrunner/fake_command_runner"
 	"code.cloudfoundry.org/lager/lagertest"
 	"code.cloudfoundry.org/netplugin-shim/garden-plugin/message"
 	"code.cloudfoundry.org/netplugin-shim/netplugin-server/caller"
+	"code.cloudfoundry.org/netplugin-shim/netplugin-server/caller/callerfakes"
 	"code.cloudfoundry.org/netplugin-shim/shimsocket"
 
 	. "github.com/onsi/ginkgo"
@@ -24,7 +24,7 @@ import (
 var _ = Describe("NetpluginCaller", func() {
 	var (
 		netpluginCaller   *caller.NetpluginCaller
-		commandRunner     *fake_command_runner.FakeCommandRunner
+		cmdRun            *callerfakes.FakeCommandRunner
 		listener          *net.UnixListener
 		socketPath        string
 		tmpFileToSend     *os.File
@@ -36,7 +36,7 @@ var _ = Describe("NetpluginCaller", func() {
 
 	BeforeEach(func() {
 		logger = lagertest.NewTestLogger("foo")
-		commandRunner = fake_command_runner.New()
+		cmdRun = new(callerfakes.FakeCommandRunner)
 
 		var err error
 		tmpDir, err = ioutil.TempDir("", "netplugin-caller")
@@ -56,7 +56,7 @@ var _ = Describe("NetpluginCaller", func() {
 		listener, err = net.ListenUnix("unix", addr)
 		Expect(err).NotTo(HaveOccurred())
 
-		netpluginCaller = caller.New(logger, "/path/to/plugin", []string{"--configFile", "/path/to/config"}).WithCommandRunner(commandRunner)
+		netpluginCaller = caller.New(logger, "/path/to/plugin", []string{"--configFile", "/path/to/config"}).WithCommandRunner(cmdRun.Spy)
 	})
 
 	AfterEach(func() {
@@ -96,16 +96,11 @@ var _ = Describe("NetpluginCaller", func() {
 			handleConn, err = listener.AcceptUnix()
 			Expect(err).NotTo(HaveOccurred())
 
-			commandRunner.WhenRunning(fake_command_runner.CommandSpec{
-				Path: "/path/to/plugin",
-			}, func(cmd *exec.Cmd) error {
-				return netpluginActionFunc(cmd)
-			})
+			cmdRun.Calls(func(cmd *exec.Cmd) error { return netpluginActionFunc(cmd) })
 
 			netpluginCaller.Handle(handleConn)
-			executedCommands := commandRunner.ExecutedCommands()
-			Expect(len(executedCommands)).To(Equal(1))
-			executedCommand = executedCommands[0]
+			Expect(cmdRun.CallCount()).To(Equal(1))
+			executedCommand = cmdRun.ArgsForCall(0)
 		})
 
 		It("calls the correct plugin", func() {

@@ -7,30 +7,31 @@ import (
 	"os"
 	"os/exec"
 
-	"code.cloudfoundry.org/commandrunner"
-	"code.cloudfoundry.org/commandrunner/linux_command_runner"
 	"code.cloudfoundry.org/lager"
 	"code.cloudfoundry.org/netplugin-shim/shimsocket"
 )
 
+//go:generate counterfeiter . CommandRunner
+type CommandRunner func(*exec.Cmd) error
+
 type NetpluginCaller struct {
-	path          string
-	extraArgs     []string
-	commandRunner commandrunner.CommandRunner
-	logger        lager.Logger
+	path      string
+	extraArgs []string
+	cmdRun    CommandRunner
+	logger    lager.Logger
 }
 
 func New(logger lager.Logger, path string, extraArgs []string) *NetpluginCaller {
 	return &NetpluginCaller{
-		path:          path,
-		extraArgs:     extraArgs,
-		commandRunner: linux_command_runner.New(),
-		logger:        logger,
+		path:      path,
+		extraArgs: extraArgs,
+		cmdRun:    func(cmd *exec.Cmd) error { return cmd.Run() },
+		logger:    logger,
 	}
 }
 
-func (c *NetpluginCaller) WithCommandRunner(runner commandrunner.CommandRunner) *NetpluginCaller {
-	c.commandRunner = runner
+func (c *NetpluginCaller) WithCommandRunner(run CommandRunner) *NetpluginCaller {
+	c.cmdRun = run
 	return c
 }
 
@@ -57,7 +58,7 @@ func (c *NetpluginCaller) Handle(conn *net.UnixConn) error {
 	cmd.Stderr = stderr
 
 	logger.Debug("calling-external-network-plugin", lager.Data{"procNSFile": procNSFile.Fd(), "message": msg.String()})
-	err = c.commandRunner.Run(cmd)
+	err = c.cmdRun(cmd)
 	reply := stdout.Bytes()
 
 	if len(reply) == 0 {

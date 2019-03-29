@@ -1,7 +1,5 @@
 # code.cloudfoundry.org/commandrunner v0.0.0-20180212143422-501fd662150b
 code.cloudfoundry.org/commandrunner
-code.cloudfoundry.org/commandrunner/linux_command_runner
-code.cloudfoundry.org/commandrunner/fake_command_runner
 # code.cloudfoundry.org/garden v0.0.0-20181108172608-62470dc86365
 code.cloudfoundry.org/garden
 # code.cloudfoundry.org/guardian v0.0.0-20190301164252-0c56b1120262
