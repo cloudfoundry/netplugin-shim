@@ -21,7 +21,7 @@ var (
 
 var _ = BeforeSuite(func() {
 	var err error
-	pluginPath, err = gexec.Build("code.cloudfoundry.org/netplugin-shim/garden-plugin")
+	pluginPath, err = gexec.Build("code.cloudfoundry.org/netplugin-shim/garden-plugin", "-mod=vendor")
 	Expect(err).NotTo(HaveOccurred())
 
 	daemonPath, err = gexec.Build("code.cloudfoundry.org/netplugin-shim/garden-plugin/fake-netplugin-daemon")
