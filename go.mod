@@ -8,7 +8,7 @@ require (
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/onsi/ginkgo v1.8.0
 	github.com/onsi/gomega v1.5.0
-	golang.org/x/sys v0.0.0-20190610200419-93c9922d18ae
+	golang.org/x/sys v0.0.0-20190626221950-04f50cda93cb
 )
 
 replace (
