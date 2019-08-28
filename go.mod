@@ -6,9 +6,9 @@ require (
 	code.cloudfoundry.org/guardian v0.0.0-00010101000000-000000000000
 	code.cloudfoundry.org/lager v2.0.0+incompatible
 	github.com/jessevdk/go-flags v1.4.0
-	github.com/onsi/ginkgo v1.8.0
-	github.com/onsi/gomega v1.5.0
-	golang.org/x/sys v0.0.0-20190626221950-04f50cda93cb
+	github.com/onsi/ginkgo v1.9.0
+	github.com/onsi/gomega v1.6.0
+	golang.org/x/sys v0.0.0-20190826190057-c7b8b68b1456
 )
 
 replace (
