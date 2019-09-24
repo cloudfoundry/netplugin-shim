@@ -21,7 +21,7 @@ var _ = BeforeSuite(func() {
 	var err error
 	netpluginServerPath, err = gexec.Build("code.cloudfoundry.org/netplugin-shim/netplugin-server", "-mod=vendor")
 	Expect(err).NotTo(HaveOccurred())
-	fakeNetpluginPath, err = gexec.Build("code.cloudfoundry.org/netplugin-shim/netplugin-server/fake-network-plugin")
+	fakeNetpluginPath, err = gexec.Build("code.cloudfoundry.org/netplugin-shim/netplugin-server/fake-network-plugin", "-mod=vendor")
 	Expect(err).NotTo(HaveOccurred())
 })
 
