@@ -17,7 +17,7 @@ github.com/cloudfoundry/dropsonde/metric_sender
 github.com/cloudfoundry/dropsonde/metrics
 # github.com/cloudfoundry/sonde-go v0.0.0-20171206171820-b33733203bb4
 github.com/cloudfoundry/sonde-go/events
-# github.com/gogo/protobuf v1.3.0
+# github.com/gogo/protobuf v1.3.1
 github.com/gogo/protobuf/gogoproto
 github.com/gogo/protobuf/proto
 github.com/gogo/protobuf/protoc-gen-gogo/descriptor
@@ -74,11 +74,11 @@ github.com/onsi/gomega/matchers/support/goraph/util
 github.com/onsi/gomega/types
 # github.com/opencontainers/runtime-spec v1.0.1
 github.com/opencontainers/runtime-spec/specs-go
-# golang.org/x/net v0.0.0-20191028085509-fe3aa8a45271
+# golang.org/x/net v0.0.0-20191119073136-fc4aabc6c914
 golang.org/x/net/html
 golang.org/x/net/html/atom
 golang.org/x/net/html/charset
-# golang.org/x/sys v0.0.0-20191029155521-f43be2a4598c
+# golang.org/x/sys v0.0.0-20191120155948-bd437916bb0e
 golang.org/x/sys/unix
 # golang.org/x/text v0.3.2
 golang.org/x/text/encoding
