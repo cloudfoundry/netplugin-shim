@@ -99,7 +99,7 @@ var _ = Describe("Integration", func() {
 	When("the server exits", func() {
 		It("cleans up the socket", func() {
 			Expect(session.Terminate().Wait()).To(gexec.Exit())
-			Eventually(socket, "10s").ShouldNot(BeAnExistingFile())
+			Expect(socket).NotTo(BeAnExistingFile())
 		})
 
 		It("writes nothing to stderr", func() {
