@@ -97,14 +97,20 @@ var _ = Describe("Integration", func() {
 	})
 
 	When("the server exits", func() {
+		JustBeforeEach(func() {
+			session.Terminate()
+		})
+
+		It("terminates successfully", func() {
+			Eventually(session).Should(gexec.Exit())
+		})
+
 		It("cleans up the socket", func() {
-			Expect(session.Terminate().Wait()).To(gexec.Exit())
-			Expect(socket).NotTo(BeAnExistingFile())
+			Eventually(socket).ShouldNot(BeAnExistingFile())
 		})
 
 		It("writes nothing to stderr", func() {
-			Expect(session.Terminate().Wait()).To(gexec.Exit())
-			Expect(session.Err.Contents()).To(BeEmpty())
+			Consistently(session.Err.Contents()).Should(BeEmpty())
 		})
 	})
 })
