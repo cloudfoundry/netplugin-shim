@@ -7,8 +7,8 @@ require (
 	code.cloudfoundry.org/lager v2.0.0+incompatible
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/onsi/ginkgo v1.16.4
-	github.com/onsi/gomega v1.15.0
-	golang.org/x/sys v0.0.0-20210809222454-d867a43fc93e
+	github.com/onsi/gomega v1.16.0
+	golang.org/x/sys v0.0.0-20211007075335-d3039528d8ac
 )
 
 replace (
