@@ -91,7 +91,7 @@ golang.org/x/net/html/charset
 ## explicit
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
-# golang.org/x/text v0.3.7
+# golang.org/x/text v0.3.7 => golang.org/x/text v0.3.7
 golang.org/x/text/encoding
 golang.org/x/text/encoding/charmap
 golang.org/x/text/encoding/htmlindex
@@ -117,3 +117,4 @@ gopkg.in/yaml.v2
 # code.cloudfoundry.org/grootfs => ../grootfs
 # code.cloudfoundry.org/guardian => ../guardian
 # code.cloudfoundry.org/idmapper => ../idmapper
+# golang.org/x/text => golang.org/x/text v0.3.7
