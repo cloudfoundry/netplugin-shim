@@ -18,6 +18,8 @@ import (
 
 const NetworkPropertyPrefix = "network."
 
+var AllowableProperties = map[string]struct{}{"log_config": {}}
+
 type externalBinaryNetworker struct {
 	commandRunner         commandrunner.CommandRunner
 	configStore           kawasaki.ConfigStore
@@ -68,6 +70,8 @@ func networkProperties(containerProperties garden.Properties) garden.Properties 
 		if strings.HasPrefix(k, NetworkPropertyPrefix) {
 			key := strings.TrimPrefix(k, NetworkPropertyPrefix)
 			properties[key] = value
+		} else if _, ok := AllowableProperties[k]; ok {
+			properties[k] = value
 		}
 	}
 
