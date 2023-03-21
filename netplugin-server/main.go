@@ -32,7 +32,7 @@ func main() {
 
 	go server.Serve(listener)
 
-	done := make(chan os.Signal)
+	done := make(chan os.Signal, 1)
 	signal.Notify(done, unix.SIGINT, unix.SIGTERM)
 	<-done
 
