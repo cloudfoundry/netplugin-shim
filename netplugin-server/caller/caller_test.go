@@ -17,7 +17,7 @@ import (
 	"code.cloudfoundry.org/netplugin-shim/netplugin-server/caller/callerfakes"
 	"code.cloudfoundry.org/netplugin-shim/shimsocket"
 
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
