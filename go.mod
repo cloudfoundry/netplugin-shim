@@ -6,7 +6,7 @@ require (
 	code.cloudfoundry.org/guardian v0.0.0-20230322140240-667cf5185786
 	code.cloudfoundry.org/lager v1.1.1-0.20230321195817-3d52f427a2d2
 	github.com/jessevdk/go-flags v1.5.1-0.20210607101731-3927b71304df
-	github.com/onsi/ginkgo/v2 v2.9.1
+	github.com/onsi/ginkgo/v2 v2.9.2
 	github.com/onsi/gomega v1.27.4
 	golang.org/x/sys v0.6.0
 )
@@ -18,7 +18,7 @@ require (
 	github.com/cloudfoundry/dropsonde v1.0.0 // indirect
 	github.com/cloudfoundry/sonde-go v0.0.0-20220627221915-ff36de9c3435 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
-	github.com/go-task/slim-sprig v0.0.0-20210107165309-348f09dbbbc0 // indirect
+	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/google/pprof v0.0.0-20230309165930-d61513b1440d // indirect
