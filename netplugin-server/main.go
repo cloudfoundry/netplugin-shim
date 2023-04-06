@@ -6,7 +6,7 @@ import (
 	"os"
 	"os/signal"
 
-	"code.cloudfoundry.org/lager"
+	"code.cloudfoundry.org/lager/v3"
 	"code.cloudfoundry.org/netplugin-shim/netplugin-server/caller"
 	"code.cloudfoundry.org/netplugin-shim/netplugin-server/service"
 	"golang.org/x/sys/unix"

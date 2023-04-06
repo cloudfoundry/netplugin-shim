@@ -11,7 +11,7 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"code.cloudfoundry.org/lager/lagertest"
+	"code.cloudfoundry.org/lager/v3/lagertest"
 	"code.cloudfoundry.org/netplugin-shim/garden-plugin/message"
 	"code.cloudfoundry.org/netplugin-shim/netplugin-server/caller"
 	"code.cloudfoundry.org/netplugin-shim/netplugin-server/caller/callerfakes"
