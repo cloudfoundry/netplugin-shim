@@ -3,7 +3,7 @@ module code.cloudfoundry.org/netplugin-shim
 go 1.19
 
 require (
-	code.cloudfoundry.org/guardian v0.0.0-20230406194638-7df66ce767e9
+	code.cloudfoundry.org/guardian v0.0.0-20230418163503-e44f10a60f42
 	code.cloudfoundry.org/lager/v3 v3.0.1
 	github.com/jessevdk/go-flags v1.5.1-0.20210607101731-3927b71304df
 	github.com/onsi/ginkgo/v2 v2.9.2
