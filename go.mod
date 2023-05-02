@@ -1,6 +1,6 @@
 module code.cloudfoundry.org/netplugin-shim
 
-go 1.19
+go 1.20
 
 require (
 	code.cloudfoundry.org/guardian v0.0.0-20230418163503-e44f10a60f42
