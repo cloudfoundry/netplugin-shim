@@ -1,10 +1,10 @@
 # code.cloudfoundry.org/commandrunner v0.0.0-20230427153105-c662e812fa6f
 ## explicit; go 1.20
 code.cloudfoundry.org/commandrunner
-# code.cloudfoundry.org/garden v0.0.0-20230516175132-234178722499 => ../garden
+# code.cloudfoundry.org/garden v0.0.0-20230522165130-8444ff5a31d7 => ../garden
 ## explicit; go 1.20
 code.cloudfoundry.org/garden
-# code.cloudfoundry.org/guardian v0.0.0-20230509175543-be426cc98461 => ../guardian
+# code.cloudfoundry.org/guardian v0.0.0-20230524153716-4ce98fefbc98 => ../guardian
 ## explicit; go 1.20
 code.cloudfoundry.org/guardian/gardener
 code.cloudfoundry.org/guardian/gardener/container-spec
@@ -17,10 +17,8 @@ code.cloudfoundry.org/lager/v3
 code.cloudfoundry.org/lager/v3/internal/truncate
 code.cloudfoundry.org/lager/v3/lagerctx
 code.cloudfoundry.org/lager/v3/lagertest
-# github.com/apoydence/eachers v0.0.0-20181020210610-23942921fe77
-## explicit
-# github.com/cloudfoundry/dropsonde v1.0.0
-## explicit
+# github.com/cloudfoundry/dropsonde v1.1.0
+## explicit; go 1.18
 github.com/cloudfoundry/dropsonde/metric_sender
 github.com/cloudfoundry/dropsonde/metrics
 # github.com/cloudfoundry/sonde-go v0.0.0-20230412182205-eaf74d09b55a
@@ -33,9 +31,6 @@ github.com/go-logr/logr/funcr
 # github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572
 ## explicit; go 1.13
 github.com/go-task/slim-sprig
-# github.com/gogo/protobuf v1.3.2
-## explicit; go 1.15
-github.com/gogo/protobuf/proto
 # github.com/google/go-cmp v0.5.9
 ## explicit; go 1.13
 github.com/google/go-cmp/cmp
@@ -77,7 +72,7 @@ github.com/onsi/ginkgo/v2/internal/parallel_support
 github.com/onsi/ginkgo/v2/internal/testingtproxy
 github.com/onsi/ginkgo/v2/reporters
 github.com/onsi/ginkgo/v2/types
-# github.com/onsi/gomega v1.27.6
+# github.com/onsi/gomega v1.27.7
 ## explicit; go 1.18
 github.com/onsi/gomega
 github.com/onsi/gomega/format
