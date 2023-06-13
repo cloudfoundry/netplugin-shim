@@ -11,7 +11,7 @@ code.cloudfoundry.org/guardian/gardener/container-spec
 code.cloudfoundry.org/guardian/kawasaki
 code.cloudfoundry.org/guardian/kawasaki/subnets
 code.cloudfoundry.org/guardian/netplugin
-# code.cloudfoundry.org/lager/v3 v3.0.1
+# code.cloudfoundry.org/lager/v3 v3.0.2
 ## explicit; go 1.19
 code.cloudfoundry.org/lager/v3
 code.cloudfoundry.org/lager/v3/internal/truncate

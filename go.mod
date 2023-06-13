@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	code.cloudfoundry.org/guardian v0.0.0-20230612151334-7fa510ba66bf
-	code.cloudfoundry.org/lager/v3 v3.0.1
+	code.cloudfoundry.org/lager/v3 v3.0.2
 	github.com/jessevdk/go-flags v1.5.1-0.20210607101731-3927b71304df
 	github.com/onsi/ginkgo/v2 v2.10.0
 	github.com/onsi/gomega v1.27.8
