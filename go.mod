@@ -3,7 +3,7 @@ module code.cloudfoundry.org/netplugin-shim
 go 1.20
 
 require (
-	code.cloudfoundry.org/guardian v0.0.0-20230627180439-5d40a970375c
+	code.cloudfoundry.org/guardian v0.0.0-20230629023047-11f0729a48c2
 	code.cloudfoundry.org/lager/v3 v3.0.2
 	github.com/jessevdk/go-flags v1.5.1-0.20210607101731-3927b71304df
 	github.com/onsi/ginkgo/v2 v2.11.0
@@ -13,7 +13,7 @@ require (
 
 require (
 	code.cloudfoundry.org/commandrunner v0.0.0-20230612151827-2b11a2b4e9b8 // indirect
-	code.cloudfoundry.org/garden v0.0.0-20230620180307-c5e06332af84 // indirect
+	code.cloudfoundry.org/garden v0.0.0-20230630233626-5b1da028ef88 // indirect
 	github.com/cloudfoundry/dropsonde v1.1.0 // indirect
 	github.com/cloudfoundry/sonde-go v0.0.0-20230620185717-2140aa2e9669 // indirect
 	github.com/go-logr/logr v1.2.4 // indirect
