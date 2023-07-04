@@ -3,12 +3,12 @@ module code.cloudfoundry.org/netplugin-shim
 go 1.20
 
 require (
-	code.cloudfoundry.org/guardian v0.0.0-20230629023047-11f0729a48c2
+	code.cloudfoundry.org/guardian v0.0.0-20230630234409-bb0e8c01746a
 	code.cloudfoundry.org/lager/v3 v3.0.2
 	github.com/jessevdk/go-flags v1.5.1-0.20210607101731-3927b71304df
 	github.com/onsi/ginkgo/v2 v2.11.0
 	github.com/onsi/gomega v1.27.8
-	golang.org/x/sys v0.9.0
+	golang.org/x/sys v0.10.0
 )
 
 require (
@@ -25,7 +25,7 @@ require (
 	github.com/opencontainers/runtime-spec v1.1.0-rc.3 // indirect
 	github.com/openzipkin/zipkin-go v0.4.1 // indirect
 	golang.org/x/net v0.11.0 // indirect
-	golang.org/x/text v0.10.0 // indirect
+	golang.org/x/text v0.11.0 // indirect
 	golang.org/x/tools v0.10.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
