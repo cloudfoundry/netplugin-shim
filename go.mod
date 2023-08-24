@@ -6,7 +6,7 @@ require (
 	code.cloudfoundry.org/guardian v0.0.0-20230822181411-3955bd1d72ff
 	code.cloudfoundry.org/lager/v3 v3.0.2
 	github.com/jessevdk/go-flags v1.5.1-0.20210607101731-3927b71304df
-	github.com/onsi/ginkgo/v2 v2.11.0
+	github.com/onsi/ginkgo/v2 v2.12.0
 	github.com/onsi/gomega v1.27.10
 	golang.org/x/sys v0.11.0
 )
