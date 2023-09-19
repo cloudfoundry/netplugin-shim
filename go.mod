@@ -5,7 +5,7 @@ go 1.21
 toolchain go1.21.0
 
 require (
-	code.cloudfoundry.org/guardian v0.0.0-20230915191650-89c3aa1aaac0
+	code.cloudfoundry.org/guardian v0.0.0-20230918154305-5977e679b062
 	code.cloudfoundry.org/lager/v3 v3.0.2
 	github.com/jessevdk/go-flags v1.5.1-0.20210607101731-3927b71304df
 	github.com/onsi/ginkgo/v2 v2.12.0
