@@ -8,20 +8,20 @@ require (
 	code.cloudfoundry.org/guardian v0.0.0-20230918154305-5977e679b062
 	code.cloudfoundry.org/lager/v3 v3.0.2
 	github.com/jessevdk/go-flags v1.5.1-0.20210607101731-3927b71304df
-	github.com/onsi/ginkgo/v2 v2.12.0
+	github.com/onsi/ginkgo/v2 v2.12.1
 	github.com/onsi/gomega v1.27.10
 	golang.org/x/sys v0.12.0
 )
 
 require (
 	code.cloudfoundry.org/commandrunner v0.0.0-20230612151827-2b11a2b4e9b8 // indirect
-	code.cloudfoundry.org/garden v0.0.0-20230912180837-747c18304b8a // indirect
+	code.cloudfoundry.org/garden v0.0.0-20230926181103-e7edbb59045e // indirect
 	github.com/cloudfoundry/dropsonde v1.1.0 // indirect
 	github.com/cloudfoundry/sonde-go v0.0.0-20230911203642-fa89d986ae20 // indirect
 	github.com/go-logr/logr v1.2.4 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
-	github.com/google/pprof v0.0.0-20230912144702-c363fe2c2ed8 // indirect
+	github.com/google/pprof v0.0.0-20230926050212-f7f687d19a98 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/opencontainers/runtime-spec v1.1.0 // indirect
