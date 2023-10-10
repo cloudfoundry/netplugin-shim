@@ -1,10 +1,10 @@
 # code.cloudfoundry.org/commandrunner v0.0.0-20230612151827-2b11a2b4e9b8
 ## explicit; go 1.20
 code.cloudfoundry.org/commandrunner
-# code.cloudfoundry.org/garden v0.0.0-20231003181205-2b0c633b6c60 => ../garden
+# code.cloudfoundry.org/garden v0.0.0-20231010181202-f61f4780fa7d => ../garden
 ## explicit; go 1.20
 code.cloudfoundry.org/garden
-# code.cloudfoundry.org/guardian v0.0.0-20231003182229-63a6f1275122 => ../guardian
+# code.cloudfoundry.org/guardian v0.0.0-20231010181805-ee4854ab0e98 => ../guardian
 ## explicit; go 1.21
 code.cloudfoundry.org/guardian/gardener
 code.cloudfoundry.org/guardian/gardener/container-spec
