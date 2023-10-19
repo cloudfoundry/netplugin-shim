@@ -1,11 +1,11 @@
 module code.cloudfoundry.org/netplugin-shim
 
-go 1.21
+go 1.21.0
 
-toolchain go1.21.0
+toolchain go1.21.3
 
 require (
-	code.cloudfoundry.org/guardian v0.0.0-20231010230455-9f5b1cc2a762
+	code.cloudfoundry.org/guardian v0.0.0-20231017182413-a9eb5aba84f8
 	code.cloudfoundry.org/lager/v3 v3.0.2
 	github.com/jessevdk/go-flags v1.5.1-0.20210607101731-3927b71304df
 	github.com/onsi/ginkgo/v2 v2.13.0
