@@ -4,7 +4,7 @@ code.cloudfoundry.org/commandrunner
 # code.cloudfoundry.org/garden v0.0.0-20231205182107-29f436b24ad5 => ../garden
 ## explicit; go 1.20
 code.cloudfoundry.org/garden
-# code.cloudfoundry.org/guardian v0.0.0-20231205185858-89513cb6f9ee => ../guardian
+# code.cloudfoundry.org/guardian v0.0.0-20231205230901-64f82b086a6d => ../guardian
 ## explicit; go 1.21.0
 code.cloudfoundry.org/guardian/gardener
 code.cloudfoundry.org/guardian/gardener/container-spec
