@@ -1,10 +1,10 @@
 # code.cloudfoundry.org/commandrunner v0.0.0-20230612151827-2b11a2b4e9b8
 ## explicit; go 1.20
 code.cloudfoundry.org/commandrunner
-# code.cloudfoundry.org/garden v0.0.0-20231218185547-7c85e0f7a6c6 => ../garden
+# code.cloudfoundry.org/garden v0.0.0-20231226182342-f6a5ba9c581c => ../garden
 ## explicit; go 1.20
 code.cloudfoundry.org/garden
-# code.cloudfoundry.org/guardian v0.0.0-20231220210744-7908baefdf76 => ../guardian
+# code.cloudfoundry.org/guardian v0.0.0-20231226182808-e49d38ea24d1 => ../guardian
 ## explicit; go 1.21.0
 code.cloudfoundry.org/guardian/gardener
 code.cloudfoundry.org/guardian/gardener/container-spec
@@ -22,7 +22,7 @@ code.cloudfoundry.org/lager/v3/lagertest
 ## explicit; go 1.18
 github.com/cloudfoundry/dropsonde/metric_sender
 github.com/cloudfoundry/dropsonde/metrics
-# github.com/cloudfoundry/sonde-go v0.0.0-20231211170018-44d78969daf7
+# github.com/cloudfoundry/sonde-go v0.0.0-20231227232801-b682ba3cb37d
 ## explicit; go 1.17
 github.com/cloudfoundry/sonde-go/events
 # github.com/docker/docker v24.0.7+incompatible
@@ -42,7 +42,7 @@ github.com/google/go-cmp/cmp/internal/diff
 github.com/google/go-cmp/cmp/internal/flags
 github.com/google/go-cmp/cmp/internal/function
 github.com/google/go-cmp/cmp/internal/value
-# github.com/google/pprof v0.0.0-20231212022811-ec68065c825e
+# github.com/google/pprof v0.0.0-20231229205709-960ae82b1e42
 ## explicit; go 1.19
 github.com/google/pprof/profile
 # github.com/hashicorp/errwrap v1.1.0

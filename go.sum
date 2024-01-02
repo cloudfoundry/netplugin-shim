@@ -6,8 +6,8 @@ github.com/apoydence/eachers v0.0.0-20181020210610-23942921fe77 h1:afT88tB6u9JCK
 github.com/apoydence/eachers v0.0.0-20181020210610-23942921fe77/go.mod h1:bXvGk6IkT1Agy7qzJ+DjIw/SJ1AaB3AvAuMDVV+Vkoo=
 github.com/cloudfoundry/dropsonde v1.1.0 h1:nerhj8K0heOsv/U/Ddou5Esw56YlNeHHJH6MP9QlACQ=
 github.com/cloudfoundry/dropsonde v1.1.0/go.mod h1:OrkxsBrAvM8X0Ve9vaSNKLR+/Jeohu3+J0M4JEaTmnM=
-github.com/cloudfoundry/sonde-go v0.0.0-20231211170018-44d78969daf7 h1:czEMbR2NF5PUz7RpuXIys3Dn386g0Lv/gOEz3H1hWZ4=
-github.com/cloudfoundry/sonde-go v0.0.0-20231211170018-44d78969daf7/go.mod h1:GiUWdcLKuM+RX4gSQBSHn3ADveMrRadWxuY6AFK5JNk=
+github.com/cloudfoundry/sonde-go v0.0.0-20231227232801-b682ba3cb37d h1:YbhBfzzEOe6WP+CCpSuIf96nNVw7utb4KMh7ZnFvftA=
+github.com/cloudfoundry/sonde-go v0.0.0-20231227232801-b682ba3cb37d/go.mod h1:n0zLvuUwZV7oDjbnHa1TuJDb+b/L33HR+Jq34gVbV0I=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -21,8 +21,8 @@ github.com/golang/protobuf v1.5.3 h1:KhyjKVUg7Usr/dYsdSqoFveMYd5ko72D+zANwlG1mmg
 github.com/golang/protobuf v1.5.3/go.mod h1:XVQd3VNwM+JqD3oG2Ue2ip4fOMUkwXdXDdiuN0vRsmY=
 github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
 github.com/google/go-cmp v0.6.0/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
-github.com/google/pprof v0.0.0-20231212022811-ec68065c825e h1:bwOy7hAFd0C91URzMIEBfr6BAz29yk7Qj0cy6S7DJlU=
-github.com/google/pprof v0.0.0-20231212022811-ec68065c825e/go.mod h1:czg5+yv1E0ZGTi6S6vVK1mke0fV+FaUhNGcd6VRS9Ik=
+github.com/google/pprof v0.0.0-20231229205709-960ae82b1e42 h1:dHLYa5D8/Ta0aLR2XcPsrkpAgGeFs6thhMcQK0oQ0n8=
+github.com/google/pprof v0.0.0-20231229205709-960ae82b1e42/go.mod h1:czg5+yv1E0ZGTi6S6vVK1mke0fV+FaUhNGcd6VRS9Ik=
 github.com/hashicorp/errwrap v1.0.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
 github.com/hashicorp/errwrap v1.1.0 h1:OxrOeh75EUXMY8TBjag2fzXGZ40LB6IKw45YeGUDY2I=
 github.com/hashicorp/errwrap v1.1.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
