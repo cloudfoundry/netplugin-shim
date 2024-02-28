@@ -55,6 +55,9 @@ func readData(r io.Reader) (netplugin.UpInputs, error) {
 	}
 
 	err = json.NewDecoder(bytes.NewBuffer(data)).Decode(&upInputs)
+	if err != nil {
+		return upInputs, err
+	}
 	return upInputs, nil
 }
 
