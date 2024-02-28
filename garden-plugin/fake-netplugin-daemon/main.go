@@ -44,7 +44,6 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		defer procNSFile.Close()
 
 		if err = ioutil.WriteFile(args.FDFile, []byte(fmt.Sprintf("%d", procNSFile.Fd())), os.ModePerm); err != nil {
 			panic(err)
@@ -70,5 +69,6 @@ func main() {
 		}
 
 		conn.Close()
+		procNSFile.Close()
 	}
 }
