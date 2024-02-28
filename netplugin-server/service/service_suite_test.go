@@ -33,12 +33,6 @@ func listenUnix(laddr *net.UnixAddr) *net.UnixListener {
 	return listener
 }
 
-func dialUnix(raddr *net.UnixAddr) *net.UnixConn {
-	conn, err := net.DialUnix("unix", nil, raddr)
-	ExpectWithOffset(1, err).NotTo(HaveOccurred())
-	return conn
-}
-
 func writeString(w io.Writer, data string) {
 	_, err := io.WriteString(w, data)
 	ExpectWithOffset(1, err).NotTo(HaveOccurred())
