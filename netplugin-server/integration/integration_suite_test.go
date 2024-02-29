@@ -1,7 +1,6 @@
 package integration_test
 
 import (
-	"io/ioutil"
 	"os"
 	"os/exec"
 
@@ -35,13 +34,13 @@ func TestIntegration(t *testing.T) {
 }
 
 func tempDir(dir, prefix string) string {
-	name, err := ioutil.TempDir(dir, prefix)
+	name, err := os.MkdirTemp(dir, prefix)
 	Expect(err).NotTo(HaveOccurred())
 	return name
 }
 
 func tempFile(dir string) *os.File {
-	file, err := ioutil.TempFile(dir, "")
+	file, err := os.CreateTemp(dir, "")
 	ExpectWithOffset(1, err).NotTo(HaveOccurred())
 	return file
 }

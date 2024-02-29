@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"os/exec"
 )
@@ -34,11 +34,11 @@ func main() {
 		failWith(err)
 	}
 
-	input, err := ioutil.ReadAll(os.Stdin)
+	input, err := io.ReadAll(os.Stdin)
 	if err != nil {
 		failWith(err)
 	}
-	if err = ioutil.WriteFile(args.Positional.StdinFile, input, os.ModePerm); err != nil {
+	if err = os.WriteFile(args.Positional.StdinFile, input, os.ModePerm); err != nil {
 		failWith(err)
 	}
 

@@ -2,8 +2,8 @@ package service_test
 
 import (
 	"io"
-	"io/ioutil"
 	"net"
+	"os"
 	"testing"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -16,7 +16,7 @@ func TestService(t *testing.T) {
 }
 
 func tempDir() string {
-	name, err := ioutil.TempDir("", "")
+	name, err := os.MkdirTemp("", "")
 	ExpectWithOffset(1, err).NotTo(HaveOccurred())
 	return name
 }

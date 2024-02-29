@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net"
 	"os"
 	"os/exec"
@@ -39,10 +39,10 @@ var _ = Describe("NetpluginCaller", func() {
 		cmdRun = new(callerfakes.FakeCommandRunner)
 
 		var err error
-		tmpDir, err = ioutil.TempDir("", "netplugin-caller")
+		tmpDir, err = os.MkdirTemp("", "netplugin-caller")
 		Expect(err).NotTo(HaveOccurred())
 
-		tmpFileToSend, err = ioutil.TempFile(tmpDir, "garden-netns-fake")
+		tmpFileToSend, err = os.CreateTemp(tmpDir, "garden-netns-fake")
 		Expect(err).NotTo(HaveOccurred())
 
 		_, err = tmpFileToSend.WriteString("potato")
@@ -117,7 +117,7 @@ var _ = Describe("NetpluginCaller", func() {
 		})
 
 		It("provides the data from the socket as stdin", func() {
-			contents, err := ioutil.ReadAll(executedCommand.Stdin)
+			contents, err := io.ReadAll(executedCommand.Stdin)
 			Expect(err).NotTo(HaveOccurred())
 			Expect(string(contents)).To(MatchJSON(`{"Pid": 1001}`))
 		})

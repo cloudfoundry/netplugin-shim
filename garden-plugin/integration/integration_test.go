@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -179,7 +178,7 @@ func encode(thing interface{}) string {
 }
 
 func tempDir(dir, prefix string) string {
-	name, err := ioutil.TempDir(dir, prefix)
+	name, err := os.MkdirTemp(dir, prefix)
 	Expect(err).NotTo(HaveOccurred())
 	return name
 }
@@ -198,7 +197,7 @@ func initCommand() *exec.Cmd {
 }
 
 func readFileAsString(path string) string {
-	content, err := ioutil.ReadFile(path)
+	content, err := os.ReadFile(path)
 	Expect(err).NotTo(HaveOccurred())
 	return string(content)
 }
