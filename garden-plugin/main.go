@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -49,12 +48,15 @@ func exitOn(err error) {
 func readData(r io.Reader) (netplugin.UpInputs, error) {
 	var upInputs netplugin.UpInputs
 
-	data, err := ioutil.ReadAll(r)
+	data, err := io.ReadAll(r)
 	if err != nil {
 		return upInputs, err
 	}
 
 	err = json.NewDecoder(bytes.NewBuffer(data)).Decode(&upInputs)
+	if err != nil {
+		return upInputs, err
+	}
 	return upInputs, nil
 }
 
