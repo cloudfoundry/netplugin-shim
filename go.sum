@@ -6,8 +6,8 @@ github.com/apoydence/eachers v0.0.0-20181020210610-23942921fe77 h1:afT88tB6u9JCK
 github.com/apoydence/eachers v0.0.0-20181020210610-23942921fe77/go.mod h1:bXvGk6IkT1Agy7qzJ+DjIw/SJ1AaB3AvAuMDVV+Vkoo=
 github.com/cloudfoundry/dropsonde v1.1.0 h1:nerhj8K0heOsv/U/Ddou5Esw56YlNeHHJH6MP9QlACQ=
 github.com/cloudfoundry/dropsonde v1.1.0/go.mod h1:OrkxsBrAvM8X0Ve9vaSNKLR+/Jeohu3+J0M4JEaTmnM=
-github.com/cloudfoundry/sonde-go v0.0.0-20240222182100-131c0f5c3247 h1:DYdLRx6PAyG/KFnapqah7z3FqeCigzWsViMz8wqFHbU=
-github.com/cloudfoundry/sonde-go v0.0.0-20240222182100-131c0f5c3247/go.mod h1:n0zLvuUwZV7oDjbnHa1TuJDb+b/L33HR+Jq34gVbV0I=
+github.com/cloudfoundry/sonde-go v0.0.0-20240311165458-423aa0d4dfc8 h1:HyE7RpLgcJBA3vxdvlv7KJtVVKdBF2sJ2TjVM5Ea46A=
+github.com/cloudfoundry/sonde-go v0.0.0-20240311165458-423aa0d4dfc8/go.mod h1:QFHOWY2pc/fHo/sOwsG6ARMbRrX4c0IeA2hEUzImOng=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

@@ -5,7 +5,7 @@ go 1.21.0
 toolchain go1.21.3
 
 require (
-	code.cloudfoundry.org/guardian v0.0.0-20240308002535-da86c7ca0930
+	code.cloudfoundry.org/guardian v0.0.0-20240308190730-b89742dc772e
 	code.cloudfoundry.org/lager/v3 v3.0.3
 	github.com/jessevdk/go-flags v1.5.1-0.20210607101731-3927b71304df
 	github.com/onsi/ginkgo/v2 v2.16.0
@@ -15,9 +15,9 @@ require (
 
 require (
 	code.cloudfoundry.org/commandrunner v0.0.0-20240308145019-f0c16f7f4dd2 // indirect
-	code.cloudfoundry.org/garden v0.0.0-20240307003505-d50f0989a829 // indirect
+	code.cloudfoundry.org/garden v0.0.0-20240311180031-f6ad2f4e4f5a // indirect
 	github.com/cloudfoundry/dropsonde v1.1.0 // indirect
-	github.com/cloudfoundry/sonde-go v0.0.0-20240222182100-131c0f5c3247 // indirect
+	github.com/cloudfoundry/sonde-go v0.0.0-20240311165458-423aa0d4dfc8 // indirect
 	github.com/docker/docker v25.0.4+incompatible // indirect
 	github.com/go-logr/logr v1.4.1 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
