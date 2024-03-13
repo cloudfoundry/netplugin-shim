@@ -33,13 +33,19 @@ func main() {
 
 	defer listener.Close()
 
+	var procNSFile *os.File
+	var msg message.Message
+
+	defer procNSFile.Close()
+
 	for {
+		var err error
 		conn, err := listener.AcceptUnix()
 		if err != nil {
 			panic(err)
 		}
 
-		procNSFile, msg, err := shimsocket.Receive(conn)
+		procNSFile, msg, err = shimsocket.Receive(conn)
 		if err != nil {
 			panic(err)
 		}
@@ -68,6 +74,5 @@ func main() {
 		}
 
 		conn.Close()
-		procNSFile.Close()
 	}
 }
