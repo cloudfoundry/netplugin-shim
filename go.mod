@@ -14,7 +14,7 @@ require (
 )
 
 require (
-	code.cloudfoundry.org/commandrunner v0.0.0-20240321142806-aff69e64e03a // indirect
+	code.cloudfoundry.org/commandrunner v0.0.0-20240322145143-2ffb109990a1 // indirect
 	code.cloudfoundry.org/garden v0.0.0-20240321140256-3cb1fc657e4d // indirect
 	github.com/cloudfoundry/dropsonde v1.1.0 // indirect
 	github.com/cloudfoundry/sonde-go v0.0.0-20240311165458-423aa0d4dfc8 // indirect
