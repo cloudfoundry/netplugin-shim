@@ -5,17 +5,17 @@ go 1.21.0
 toolchain go1.21.3
 
 require (
-	code.cloudfoundry.org/guardian v0.0.0-20240328170032-6e87a0a1db86
+	code.cloudfoundry.org/guardian v0.0.0-20240403132025-51029bd5818b
 	code.cloudfoundry.org/lager/v3 v3.0.3
 	github.com/jessevdk/go-flags v1.5.1-0.20210607101731-3927b71304df
 	github.com/onsi/ginkgo/v2 v2.17.1
 	github.com/onsi/gomega v1.32.0
-	golang.org/x/sys v0.18.0
+	golang.org/x/sys v0.19.0
 )
 
 require (
-	code.cloudfoundry.org/commandrunner v0.0.0-20240329145327-1ee98418fdb6 // indirect
-	code.cloudfoundry.org/garden v0.0.0-20240328123039-9e27b1d0e951 // indirect
+	code.cloudfoundry.org/commandrunner v0.0.0-20240405142619-6969114863ce // indirect
+	code.cloudfoundry.org/garden v0.0.0-20240405183626-a27fa41fcaa3 // indirect
 	github.com/cloudfoundry/dropsonde v1.1.0 // indirect
 	github.com/cloudfoundry/sonde-go v0.0.0-20240311165458-423aa0d4dfc8 // indirect
 	github.com/docker/docker v26.0.0+incompatible // indirect
@@ -29,9 +29,9 @@ require (
 	github.com/openzipkin/zipkin-go v0.4.2 // indirect
 	github.com/vishvananda/netlink v1.2.1-beta.2 // indirect
 	github.com/vishvananda/netns v0.0.4 // indirect
-	golang.org/x/net v0.22.0 // indirect
+	golang.org/x/net v0.24.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
-	golang.org/x/tools v0.19.0 // indirect
+	golang.org/x/tools v0.20.0 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gotest.tools/v3 v3.5.1 // indirect
