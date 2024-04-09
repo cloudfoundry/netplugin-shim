@@ -14,15 +14,15 @@ require (
 )
 
 require (
-	code.cloudfoundry.org/commandrunner v0.0.0-20240405142619-6969114863ce // indirect
-	code.cloudfoundry.org/garden v0.0.0-20240405184154-4b258b482c64 // indirect
+	code.cloudfoundry.org/commandrunner v0.0.0-20240409143025-053fd44430bb // indirect
+	code.cloudfoundry.org/garden v0.0.0-20240409184058-44b21cda626c // indirect
 	github.com/cloudfoundry/dropsonde v1.1.0 // indirect
 	github.com/cloudfoundry/sonde-go v0.0.0-20240311165458-423aa0d4dfc8 // indirect
 	github.com/docker/docker v26.0.0+incompatible // indirect
 	github.com/go-logr/logr v1.4.1 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
-	github.com/google/pprof v0.0.0-20240402174815-29b9bb013b0f // indirect
+	github.com/google/pprof v0.0.0-20240409012703-83162a5b38cd // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/opencontainers/runtime-spec v1.2.0 // indirect
