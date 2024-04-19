@@ -1,5 +1,5 @@
-code.cloudfoundry.org/commandrunner v0.0.0-20240417143643-6a39decd883a h1:o07ls4IJZCoAvIyx8aTQ2HrWrR4HQR+74tUhqguN4RU=
-code.cloudfoundry.org/commandrunner v0.0.0-20240417143643-6a39decd883a/go.mod h1:HDTADIVvOT/Nji/V/WwepbdY3cSNmrcEmYYXMU4HmlY=
+code.cloudfoundry.org/commandrunner v0.0.0-20240419143856-d3eb31508218 h1:vGLu6V5G9WGRUuCEStg2ARMnYYvIDh+nr3EF4Bo2W5Y=
+code.cloudfoundry.org/commandrunner v0.0.0-20240419143856-d3eb31508218/go.mod h1:c9601QMKjwQvDBYBHs1Bt8ic3OBCns4f7LHZ0upcpQ0=
 code.cloudfoundry.org/lager/v3 v3.0.3 h1:/UTmadZfIaKuT/whEinSxK1mzRfNu1uPfvjFfGqiwzM=
 code.cloudfoundry.org/lager/v3 v3.0.3/go.mod h1:Zn5q1SrIuuHjEUE7xerMKt3ztunrJQCZETAo7rV0CH8=
 github.com/apoydence/eachers v0.0.0-20181020210610-23942921fe77 h1:afT88tB6u9JCKQZVAAaa9ICz/uGn5Uw9ekn6P22mYKM=
@@ -11,8 +11,8 @@ github.com/cloudfoundry/sonde-go v0.0.0-20240311165458-423aa0d4dfc8/go.mod h1:QF
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/docker/docker v26.0.1+incompatible h1:t39Hm6lpXuXtgkF0dm1t9a5HkbUfdGy6XbWexmGr+hA=
-github.com/docker/docker v26.0.1+incompatible/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
+github.com/docker/docker v26.0.2+incompatible h1:yGVmKUFGgcxA6PXWAokO0sQL22BrQ67cgVjko8tGdXE=
+github.com/docker/docker v26.0.2+incompatible/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
 github.com/go-logr/logr v1.4.1 h1:pKouT5E8xu9zeFC39JXRDukb6JFQPXM5p5I91188VAQ=
 github.com/go-logr/logr v1.4.1/go.mod h1:9T104GzyrTigFIr8wt5mBrctHMim0Nb2HLGrmQ40KvY=
 github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 h1:tfuBGBXKqDEevZMzYi5KSi8KkcZtzBcTgAUUtapy0OI=
